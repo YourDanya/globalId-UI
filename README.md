@@ -2,7 +2,7 @@ Template MERN app
 
 TODOS:
 
-❌ Make logical client Routes: [/auth, /auth/login, /auth/signup, /home, /dashboard]
+❌ Make logical client Routes: [/auth, /auth/login, /auth/signup, /home, /dashboard].
 ❌ Make global loading state (.slice) state.loading.user.auth instead of state.user.loading.auth
 ❌ Add loading where it's missing (after dashboard reload and when loging with google)
 ❌ Add selectors
