@@ -1,6 +1,6 @@
 Template MERN app
 
-TODOS:
+TODOS: (in logical order)
 
 ❌ Make logical client Routes: [/auth, /auth/login, /auth/signup, /home, /dashboard]
 
