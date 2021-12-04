@@ -8,7 +8,7 @@ TODOS:
 
 ❌ Add loading where it's missing (after dashboard reload and when loging with google)
 
-❌ Add selectors
+❌ Add redux selectors
 
 
 
