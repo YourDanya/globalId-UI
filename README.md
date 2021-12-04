@@ -8,6 +8,8 @@ TODOS: (in logical order)
 
 ❌ Add loading where it's missing (after dashboard reload and when loging with google)
 
+❌ Implement LOADING, MESSAGE, SUCCESS pattern in withLoading saga and global loading state
+
 ❌ Add redux selectors
 
 
