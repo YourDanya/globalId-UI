@@ -12,20 +12,15 @@ import { getUserData } from './redux/user.slice';
 
 
 
-const App = ({auth, getUserData}) => {
+const App = ({auth, getUserData, match}) => {
 useEffect(() => {
   getUserData()
 }, [])
   return (
-      <Router>
         <>
           <Navbar />
-          <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route component={Routes} />
-          </Switch>
+          <Routes />
         </>
-      </Router>
   );
 };
 

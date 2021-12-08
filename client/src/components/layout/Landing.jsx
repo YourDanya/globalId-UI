@@ -16,8 +16,6 @@ const Landing = ({ isAuthenticated }) => {
           <h1 className='x-large'>MERN Boilerplate</h1>
           
           <div className='buttons'>
-            
-            <AuthMenu />
           </div>
         </div>
       </div>

@@ -17,7 +17,6 @@ function GoogleLoginButton({handleToken, isLoading}) {
 				
 				cookiePolicy={'single_host_origin'}
 			/>
-
 		</div>
 	)
 }
