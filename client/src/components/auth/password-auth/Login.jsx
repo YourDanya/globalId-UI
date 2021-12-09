@@ -69,8 +69,8 @@ const Login = ({ login, isAuthenticated, isLoading }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.auth.success,
-  isLoading: state.user.loading.auth
+  isAuthenticated: state.loading.user.auth.success,
+  isLoading: state.loading.user.auth.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,18 +2,32 @@ import {put, call} from '@redux-saga/core/effects'
 
 export default function withLoading(callback, ...loadingSetters) {
 
-return function* (...args) {	let i = 0
+return function* (...args) {	
+	let 
+		success = false,
+		isLoading = true,
+		message = ''
+	
+	
+	let i = 0
 	while (i < loadingSetters.length) {
 		console.log(loadingSetters[i])
-		yield put(loadingSetters[i](true))
+		yield put(loadingSetters[i]({success, isLoading, message}))
 		i++
 	}
 
-	yield call(callback, ...args)
+	try {
+		message = yield call(callback, ...args)
+		success = true
+	} catch (err) {
+		message = err.message
+	} finally {
+		isLoading = false
+	}
 
 	i = 0
 	while (i < loadingSetters.length) {
-	  yield put(loadingSetters[i](false))
+	  yield put(loadingSetters[i]({ success, isLoading, message }))
 		i++
 	}}
 }

@@ -17,7 +17,7 @@ const Routes = ({loading}) => {
       <Alert />
       <Switch>
         <Route exact path='/'  component={Landing} />
-        <PrivateRoute exact path='/dashboard' isLoading={loading.user.auth || loading.user.data} component={() => <Dashboard isLoading={loading.user.data}/>} />
+        <PrivateRoute exact path='/dashboard' isLoading={loading.user.auth.isLoading || loading.user.data.isLoading} component={() => <Dashboard isLoading={loading.user.data.isLoading}/>} />
         <Route path='/auth' component={AuthMenu} />
         <Route component={NotFound} />
       </Switch>
@@ -26,12 +26,7 @@ const Routes = ({loading}) => {
 };
 
 const mapStateToProps = (state) => ({
-  loading: {
-    user: {
-      data: state.user.loading.data,
-      auth: state.user.loading.auth
-    }
-  }
+  loading: state.loading
 })
 
 export default connect(mapStateToProps, null)(Routes);

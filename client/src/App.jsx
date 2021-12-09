@@ -12,7 +12,7 @@ import { getUserData } from './redux/user.slice';
 
 
 
-const App = ({auth, getUserData, match}) => {
+const App = ({ getUserData, match}) => {
 useEffect(() => {
   getUserData()
 }, [])
@@ -25,7 +25,6 @@ useEffect(() => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  auth: (state) => state.user.auth
 })
 
 const mapDispatchToProps = (dispatch) => ({

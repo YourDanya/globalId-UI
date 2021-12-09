@@ -9,29 +9,21 @@ import {
 import authApi from '../api/auth.api'
 import userApi from '../api/user.api'
 import withLoading from '../utils/redux-utils/withLoading.saga'
-import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, loginWithGoogle, logout, setUserData, setUserAuth, setDataLoading, setAuthLoading } from './user.slice'
+import { setAuthLoading, setUserDataLoading } from './loading.slice'
+import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, loginWithGoogle, logout, setUserData } from './user.slice'
 
 
 
 const getUserDataSaga = withLoading(function* () {
-  try {
     const userData = yield userApi.getSingle('user-data')
     yield put(setUserData(userData))
-		yield put(setUserAuth({success: true}))
-  } catch (error) {
-    yield console.log(error)
-  }
-}, setDataLoading)
+    return userData.message
+}, setUserDataLoading, setAuthLoading)
 
 const handleAuth = withLoading(function* (auth) {
-  try {
-    const authResponse = yield call(auth)
-    yield put(setUserAuth({ success: true, message: authResponse }))
+    const authMessage = yield call(auth)
 		yield call(getUserDataSaga)
-  } catch (error) {
-    yield console.log(error)
-    yield put(setUserAuth({ success: false, message: error }))
-  }
+    return authMessage
 }, setAuthLoading)
 
 
@@ -43,15 +35,17 @@ function* loginWithNameAndPasswordSaga({ payload }) {
   yield call(handleAuth, async () => await authApi.postSingle('login', payload))
 }
 
-const createUserWithNameAndPasswordSaga = withLoading(function * ({ payload }) {
+function* createUserWithNameAndPasswordSaga({ payload }) {
   yield call(handleAuth, async () => await authApi.postSingle('signup', payload))
-})
+}
 
 const logoutSaga = withLoading(function * () {
-  yield authApi.postSingle('logout')
+  const authMessage = yield authApi.postSingle('logout')
   yield put(setUserData(null))
-	yield put(setUserAuth({success: false, message: 'logged out'}))
-}, setDataLoading)
+  yield put(setAuthLoading({success: false, isLoading: false, message: ''}))
+  console.log(authMessage)
+  return authMessage
+}, setUserDataLoading)
 
 export default function* userSaga() {
   yield takeLatest(loginWithGoogle, loginWithGoogleSaga)

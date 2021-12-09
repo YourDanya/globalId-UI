@@ -11,30 +11,36 @@ import authApi from '../api/auth.api'
 
 
 const initialState = {
-  data: null
+	user: {
+		data: {
+	    success: false,
+			isLoading: false,
+	    message: '',
+	  },
+	  auth: {
+	    success: false,
+			isLoading: false,
+	    message: '',
+	  }
+	}
+  
 }
 
-const userSlice = createSlice({
-  name: 'user',
+const loadingSlice = createSlice({
+  name: 'loading',
   initialState,
   reducers: {
-    setUserData(state, { payload }) {
-      state.data = payload
+    setUserDataLoading(state, { payload }) {
+      state.user.data = payload
     },
-    getUserData() {},
-    loginWithGoogle() {},
-    loginWithNameAndPassword() {},
-    createUserWithNameAndPassword() {},
-    logout() {},
+    setAuthLoading(state, { payload }) {
+      state.user.auth = payload
+    },
   }
 })
 
-export default userSlice.reducer
+export default loadingSlice.reducer
 export const {
-  setUserData,
-  getUserData,
-  loginWithNameAndPassword,
-  loginWithGoogle,
-  createUserWithNameAndPassword,
-	logout
-} = userSlice.actions
+  setUserDataLoading,
+  setAuthLoading,
+} = loadingSlice.actions

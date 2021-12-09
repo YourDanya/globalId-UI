@@ -2,12 +2,6 @@ Template MERN app
 
 TODOS: (in logical order)
 
-❌ Make global loading state (.slice) state.loading.user.auth instead of state.user.loading.auth
-
-❌ Add loading where it's missing (when loging with google)
-
-❌ Implement LOADING, MESSAGE, SUCCESS pattern in withLoading saga and global loading state
-
 ❌ Add redux selectors
 
 ❌ Rewrite styles into .module.sass files

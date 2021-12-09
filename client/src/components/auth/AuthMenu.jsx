@@ -30,15 +30,15 @@ function PasswordAuthMenu({ history, match }) {
 }
 
 
-function AuthMenu({ loginWithGoogle, loading, history, match, isAuthenticated }) {
-	return (isAuthenticated || loading.user.data) ? <Redirect to='dashboard' /> : (
+function AuthMenu({ isAuthenticated, isLoadingUser, isLoadingAuth, loginWithGoogle, history, match }) {
+	return (isAuthenticated || isLoadingUser) ? <Redirect to='dashboard' /> : (
 		<div>
 			<Switch>
 				<Route path={`${match.url}/with-password`} component={PasswordAuthMenu} />
 				<div className="buttons">
 					<AuthMessage />
 					<button className="btn" onClick={() => history.push(`${match.url}/with-password`)}>via Name and password</button>
-					<GoogleLoginButton handleToken={loginWithGoogle} isLoading={loading.user.auth} />
+					<GoogleLoginButton handleToken={loginWithGoogle} isLoading={isLoadingAuth} />
 				</div>
 			</Switch>
 		</div>
@@ -46,9 +46,9 @@ function AuthMenu({ loginWithGoogle, loading, history, match, isAuthenticated })
 }
 
 const mapStateToProps = createStructuredSelector({
-	auth: (state) => state.user.auth,
-	loading: (state) => ({ user: { auth: state.user.loading.auth, data: state.user.loading.data } }),
-  isAuthenticated: (state) => state.user.auth.success
+	isLoadingUser: (state) => state.loading.user.data.isLoading,
+	isLoadingAuth: state => state.loading.user.auth.isLoading,
+  isAuthenticated: (state) => state.loading.user.auth.success
 })
 
 const mapDispatchToProps = (dispatch) => ({

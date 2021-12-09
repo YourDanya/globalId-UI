@@ -5,7 +5,7 @@ import { createUserWithNameAndPassword } from '../../../redux/user.slice';
 import AuthMessage from '../../layout/AuthMessage';
 import Spinner from '../../layout/Spinner';
 
-const Register = ({ setAlert, register, isAuthenticated, auth, isLoading }) => {
+const Register = ({ setAlert, register, isAuthenticated, isLoading }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -74,9 +74,9 @@ const Register = ({ setAlert, register, isAuthenticated, auth, isLoading }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.auth.success,
-  auth: state.user.auth,
-  isLoading: state.user.loading.auth
+  isAuthenticated: state.loading.user.auth.success,
+  authMessage: state.loading.user.auth.message,
+  isLoading: state.loading.user.auth.isLoading
 })
 
 const mapDispatchToProps = (dispatch) => ({

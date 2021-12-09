@@ -11,7 +11,7 @@ const AuthMessage = ({message}) => {
 }
 
 const mapStateToProps = (state) => ({
-	message: state.user.auth.message
+	message: state.loading.user.auth.message
 })
 
 export default WithSpinner(connect(mapStateToProps)(AuthMessage))

@@ -46,7 +46,7 @@ const Navbar = ({ isAuthenticated, logout }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.auth.success
+  isAuthenticated: state.loading.user.auth.success
 });
 
 const mapDispatchToProps = dispatch => ({
