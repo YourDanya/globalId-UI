@@ -1,8 +1,8 @@
 import React from 'react'
 import GoogleLogin, { GoogleLogout } from 'react-google-login'
 import { connect } from 'react-redux'
-import { setAuthLoading } from '../../../redux/loading.slice'
-import WithSpinner from '../../layout/WithSpinner/WithSpinner'
+import { setAuthLoading } from '../../../../redux/loading.slice'
+import WithSpinner from '../../../layout/WithSpinner/WithSpinner'
 
 function GoogleLoginButton({handleToken, setLoading}) {
 	const handleClick = () => setLoading({isLoading: true, success: false, message: ''})

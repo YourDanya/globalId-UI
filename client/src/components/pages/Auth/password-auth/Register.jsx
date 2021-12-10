@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { selectAuthLoading } from '../../../redux/loading.slice';
-import { createUserWithNameAndPassword } from '../../../redux/user.slice';
-import AuthMessage from '../../layout/AuthMessage';
-import Spinner from '../../layout/Spinner';
+import { selectAuthLoading } from '../../../../redux/loading.slice';
+import { createUserWithNameAndPassword } from '../../../../redux/user.slice';
+import AuthMessage from '../../../layout/AuthMessage';
+
+import styles from '../AuthMenu.module.sass'
+
 
 const Register = ({ register, isAuthenticated, isLoading }) => {
   const [formData, setFormData] = useState({
@@ -31,9 +33,7 @@ const Register = ({ register, isAuthenticated, isLoading }) => {
   return (
     <>
       <h1 className='large text-primary'>Sign Up</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> Create Your Account
-      </p>
+      <p className='lead'> Create Your Account</p>
       <AuthMessage isLoading={isLoading} />
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
@@ -63,7 +63,7 @@ const Register = ({ register, isAuthenticated, isLoading }) => {
             onChange={e => onChange(e)}
           />
         </div>
-        <input type='submit' className='btn btn-primary' value='Register' />
+        <input type='submit' className={`${styles.btn} ${styles.primary}`} value='Register' />
       </form>
       <p className='my-1'>
         Already have an account? <Link to='/auth/with-password/login'>Sign In</Link>

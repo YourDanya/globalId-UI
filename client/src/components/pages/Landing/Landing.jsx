@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import AuthMenu from '../auth/AuthMenu';
-import { selectAuthLoading } from '../../redux/loading.slice';
+import { selectAuthLoading } from '../../../redux/loading.slice';
+import styles from './Landing.module.sass'
+
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -10,14 +11,11 @@ const Landing = ({ isAuthenticated }) => {
   }
 
   return (
-    <section className='landing'>
+    <section className={styles.landing}>
       <h2 style={{color: 'black'}}>Choose auth method</h2>
-      <div className='dark-overlay'>
-        <div className='landing-inner'>
-          <h1 className='x-large'>MERN Boilerplate</h1>
-          
-          <div className='buttons'>
-          </div>
+      <div className={styles.dark_overlay}>
+        <div className={styles.landing_inner}>
+          <h1 className={styles.x_large}>MERN Boilerplate</h1>
         </div>
       </div>
     </section>

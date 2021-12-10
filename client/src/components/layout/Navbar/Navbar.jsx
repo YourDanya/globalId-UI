@@ -1,16 +1,17 @@
 import React, {  } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../../redux/user.slice';
-import { selectAuthLoading } from '../../redux/loading.slice';
+import { logout } from '../../../redux/user.slice';
+import { selectAuthLoading } from '../../../redux/loading.slice';
+import styles from './Navbar.module.sass'
+
 
 const Navbar = ({ isAuthenticated, logout }) => {
   const authLinks = (
     <ul>
       <li>
         <Link to='/dashboard'>
-          <i className='fas fa-user' />{' '}
-          <span className='hide-sm'>Dashboard</span>
+          <span className={styles.hide_if_small}>Dashboard</span>
         </Link>
       </li>
       {
@@ -33,10 +34,10 @@ const Navbar = ({ isAuthenticated, logout }) => {
   );
 
   return (
-    <nav className='navbar bg-dark'>
+    <nav className={styles.navbar}>
       <h1>
         <Link to='/'>
-          <i className='fas fa-code' /> MERN Boilerplate
+           MERN Boilerplate
         </Link>
       </h1>
         <>{isAuthenticated ? authLinks : guestLinks}</>
