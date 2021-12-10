@@ -1,5 +1,5 @@
 import React from 'react'
-import './my-threads-styles.sass'
+import styles from './my-threads.module.sass'
 
 const MyThreads= ()=>{
     return <div>

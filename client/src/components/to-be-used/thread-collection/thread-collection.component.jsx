@@ -1,5 +1,5 @@
-import React from './thread-collection.styles.sass'
-import './thread-collection.styles.sass'
+
+import styles from './thread-collection.module.sass'
 
 const ThreadCollection= ()=>{
     return <div>

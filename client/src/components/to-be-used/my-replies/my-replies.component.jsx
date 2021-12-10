@@ -1,5 +1,5 @@
 import React from 'react'
-import './my-replies.styles.sass'
+import styles from './my-replies.module.sass'
 
 const MyReplies= ()=>{
     return <div>

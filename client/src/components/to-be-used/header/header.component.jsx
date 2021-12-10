@@ -1,5 +1,5 @@
 import React from "react";
-import './header.component.styles.sass'
+import styles from './header.module.sass'
 import pathLogo from '../../assets/logo2.jpg'
 import defaultUser from '../../assets/default-avatar.jpg'
 
