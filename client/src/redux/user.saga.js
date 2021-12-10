@@ -17,12 +17,14 @@ import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, l
 const getUserDataSaga = withLoading(function* () {
     const userData = yield userApi.getSingle('user-data')
     yield put(setUserData(userData))
+
     return userData.message
 }, setUserDataLoading, setAuthLoading)
 
 const handleAuth = withLoading(function* (auth) {
     const authMessage = yield call(auth)
 		yield call(getUserDataSaga)
+
     return authMessage
 }, setAuthLoading)
 
@@ -43,7 +45,7 @@ const logoutSaga = withLoading(function * () {
   const authMessage = yield authApi.postSingle('logout')
   yield put(setUserData(null))
   yield put(setAuthLoading({success: false, isLoading: false, message: ''}))
-  console.log(authMessage)
+  
   return authMessage
 }, setUserDataLoading)
 

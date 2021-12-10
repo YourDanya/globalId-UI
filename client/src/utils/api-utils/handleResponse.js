@@ -10,5 +10,5 @@ export function handleResponse(response) {
 }
 
 export function handleError(error) {
-	throw (error.response?.data || error.message)
+	throw new Error(error.response?.data || error.message)
 }

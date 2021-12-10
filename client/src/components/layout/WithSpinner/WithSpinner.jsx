@@ -3,6 +3,7 @@ import classes from './WithSpinner.module.sass'
 import React from 'react'
 
 const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
+	// useEffect(() => console.log(is))
 	return (
 		isLoading
 			?

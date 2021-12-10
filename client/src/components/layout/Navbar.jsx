@@ -2,6 +2,7 @@ import React, {  } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/user.slice';
+import { selectAuthLoading } from '../../redux/loading.slice';
 
 const Navbar = ({ isAuthenticated, logout }) => {
   const authLinks = (
@@ -46,7 +47,7 @@ const Navbar = ({ isAuthenticated, logout }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.loading.user.auth.success
+  isAuthenticated: selectAuthLoading(state).success
 });
 
 const mapDispatchToProps = dispatch => ({

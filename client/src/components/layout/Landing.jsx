@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AuthMenu from '../auth/AuthMenu';
+import { selectAuthLoading } from '../../redux/loading.slice';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -25,7 +26,7 @@ const Landing = ({ isAuthenticated }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.loading.user.auth.success
+  isAuthenticated: selectAuthLoading(state).success
 });
 
 export default connect(mapStateToProps)(Landing);

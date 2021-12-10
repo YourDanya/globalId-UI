@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { selectAuthLoading } from '../../../redux/loading.slice';
 import { createUserWithNameAndPassword } from '../../../redux/user.slice';
 import AuthMessage from '../../layout/AuthMessage';
 import Spinner from '../../layout/Spinner';
 
-const Register = ({ setAlert, register, isAuthenticated, isLoading }) => {
+const Register = ({ register, isAuthenticated, isLoading }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -65,18 +66,17 @@ const Register = ({ setAlert, register, isAuthenticated, isLoading }) => {
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>
-        Already have an account? <Link to='/login'>Sign In</Link>
+        Already have an account? <Link to='/auth/with-password/login'>Sign In</Link>
       </p>
-      <Link to='/'>Choose another auth method</Link>
+      <Link to='/auth'>Choose another auth method</Link>
     </>
   );
 };
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.loading.user.auth.success,
-  authMessage: state.loading.user.auth.message,
-  isLoading: state.loading.user.auth.isLoading
+  isAuthenticated: selectAuthLoading(state).success,
+  isLoading: selectAuthLoading(state).isLoading
 })
 
 const mapDispatchToProps = (dispatch) => ({

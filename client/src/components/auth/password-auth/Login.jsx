@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { loginWithNameAndPassword } from '../../../redux/user.slice';
 import AuthMessage from '../../layout/AuthMessage';
 import Spinner from '../../layout/Spinner';
+import { selectAuthLoading } from '../../../redux/loading.slice';
 
-const Login = ({ login, isAuthenticated, isLoading }) => {
+const Login = ({ login, isAuthenticated, isLoading, match, location }) => {
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -59,9 +60,9 @@ const Login = ({ login, isAuthenticated, isLoading }) => {
         <input type='submit' className='btn btn-primary' value='Login' />
       </form>
       <p className='my-1'>
-        Don't have an account? <Link to='/register'>Sign Up</Link>
+        Don't have an account? <Link to={`/auth/with-password/register`}>Sign Up</Link>
       </p>
-      <Link to='/'>Choose another auth method</Link>
+      <Link to='/auth'>Choose another auth method</Link>
     </>
   );
 };
@@ -69,8 +70,8 @@ const Login = ({ login, isAuthenticated, isLoading }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.loading.user.auth.success,
-  isLoading: state.loading.user.auth.loading
+  isAuthenticated: selectAuthLoading(state).success,
+  isLoading: selectAuthLoading(state).isLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({

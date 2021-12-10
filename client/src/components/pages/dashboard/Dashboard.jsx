@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { selectUserData } from '../../../redux/user.slice';
 import Spinner from '../../layout/Spinner';
 import WithSpinner from '../../layout/WithSpinner/WithSpinner';
 
@@ -16,7 +17,7 @@ const Dashboard = ({user}) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.user.data
+  user: selectUserData(state)
 });
 
 export default WithSpinner(connect(mapStateToProps)(Dashboard));

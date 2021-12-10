@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import WithSpinner from '../layout/WithSpinner/WithSpinner';
 import Spinner from '../layout/Spinner';
+import { selectAuthLoading } from '../../redux/loading.slice';
 
 const PrivateRoute = ({
   component: Component,
@@ -23,7 +24,7 @@ const PrivateRoute = ({
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.loading.user.auth.success
+  isAuthenticated: selectAuthLoading(state).success
 });
 
 export default connect(mapStateToProps)(PrivateRoute)

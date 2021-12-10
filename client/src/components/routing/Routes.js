@@ -9,15 +9,16 @@ import PrivateRoute from './PrivateRoute';
 import { connect } from 'react-redux';
 import AuthMenu from '../auth/AuthMenu';
 import Landing from '../layout/Landing';
+import { selectAuthLoading, selectUserDataLoading } from '../../redux/loading.slice';
 
-const Routes = ({loading}) => {
+const Routes = ({isAuthLoading, isUserDataLoading}) => {
 // useEffect(() => console.log(loading.user.data), [loading])
   return (
     <section className='container'>
       <Alert />
       <Switch>
         <Route exact path='/'  component={Landing} />
-        <PrivateRoute exact path='/dashboard' isLoading={loading.user.auth.isLoading || loading.user.data.isLoading} component={() => <Dashboard isLoading={loading.user.data.isLoading}/>} />
+        <PrivateRoute exact path='/dashboard' isLoading={isAuthLoading || isUserDataLoading} component={() => <Dashboard isLoading={isUserDataLoading}/>} />
         <Route path='/auth' component={AuthMenu} />
         <Route component={NotFound} />
       </Switch>
@@ -26,7 +27,8 @@ const Routes = ({loading}) => {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.loading
+  isUserDataLoading: selectUserDataLoading(state).isLoading,
+  isAuthLoading: selectAuthLoading(state).isLoading
 })
 
 export default connect(mapStateToProps, null)(Routes);

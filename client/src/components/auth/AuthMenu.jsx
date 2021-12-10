@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
+import { selectAuthLoading, selectUserDataLoading } from '../../redux/loading.slice'
 import { loginWithGoogle } from '../../redux/user.slice'
 import AuthMessage from '../layout/AuthMessage'
 import GoogleLoginButton from './oauth-buttons/GoogleLoginButton'
@@ -31,7 +32,7 @@ function PasswordAuthMenu({ history, match }) {
 
 
 function AuthMenu({ isAuthenticated, isLoadingUser, isLoadingAuth, loginWithGoogle, history, match }) {
-	return (isAuthenticated || isLoadingUser) ? <Redirect to='dashboard' /> : (
+	return (isAuthenticated || isLoadingUser) ? <Redirect to='/dashboard' /> : (
 		<div>
 			<Switch>
 				<Route path={`${match.url}/with-password`} component={PasswordAuthMenu} />
@@ -45,10 +46,10 @@ function AuthMenu({ isAuthenticated, isLoadingUser, isLoadingAuth, loginWithGoog
 	)
 }
 
-const mapStateToProps = createStructuredSelector({
-	isLoadingUser: (state) => state.loading.user.data.isLoading,
-	isLoadingAuth: state => state.loading.user.auth.isLoading,
-  isAuthenticated: (state) => state.loading.user.auth.success
+const mapStateToProps = state => ({
+	isLoadingUser: selectUserDataLoading(state).isLoading,
+	isLoadingAuth: selectAuthLoading(state).isLoading,
+  isAuthenticated: selectAuthLoading(state).success
 })
 
 const mapDispatchToProps = (dispatch) => ({
