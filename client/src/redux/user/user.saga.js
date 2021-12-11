@@ -6,10 +6,10 @@ import {
   select,
   delay
 } from '@redux-saga/core/effects'
-import authApi from '../api/auth.api'
-import userApi from '../api/user.api'
-import withLoading from '../utils/redux-utils/withLoading.saga'
-import { setAuthLoading, setUserDataLoading } from './loading.slice'
+import authApi from '../../api/auth.api'
+import userApi from '../../api/user.api'
+import withLoading from '../../utils/redux-utils/withLoading.saga'
+import { setAuthLoading, setUserDataLoading } from '../loading.slice'
 import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, loginWithGoogle, logout, setUserData } from './user.slice'
 
 

@@ -1,0 +1,19 @@
+import {
+  call,
+  put,
+  takeEvery,
+  takeLatest,
+  select,
+  delay
+} from '@redux-saga/core/effects'
+import withLoading from '../../utils/redux-utils/withLoading.saga'
+
+
+
+
+
+export default function* userSaga() {
+  yield takeLatest({type: 'action1'}, function* () {})
+	yield takeLatest({type: 'action2'}, function* () {})
+	yield takeLatest({type: 'action3'}, function* () {})
+}

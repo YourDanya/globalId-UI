@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createSelector } from 'reselect'
-import userApi from '../api/user.api'
-import authApi from '../api/auth.api'
+import userApi from '../../api/user.api'
+import authApi from '../../api/auth.api'
 
 const initialState = {
   data: null

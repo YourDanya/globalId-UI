@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginWithNameAndPassword } from '../../../../redux/user.slice';
+import { loginWithNameAndPassword } from '../../../../redux/user/user.slice';
 import AuthMessage from '../../../layout/AuthMessage';
 import { selectAuthLoading } from '../../../../redux/loading.slice';
 

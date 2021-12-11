@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { selectAuthLoading } from '../../../../redux/loading.slice';
-import { createUserWithNameAndPassword } from '../../../../redux/user.slice';
+import { createUserWithNameAndPassword } from '../../../../redux/user/user.slice';
 import AuthMessage from '../../../layout/AuthMessage';
 
 import styles from '../AuthMenu.module.sass'

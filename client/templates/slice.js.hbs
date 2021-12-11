@@ -1,0 +1,25 @@
+import { createSlice } from '@reduxjs/toolkit'
+import { createSelector } from 'reselect'
+
+
+const initialState = {
+  data: null
+}
+
+const {{camelCase name}}Slice = createSlice({
+  name: '{{camelCase name}}',
+  initialState,
+  reducers: {
+		set{{pascalCase name}}Data(state, {payload}) {
+			state.data = payload
+		} 
+  }
+})
+
+export default {{camelCase name}}Slice.reducer
+export const {
+  set{{pascalCase name}}Data
+} = {{camelCase name}}Slice.actions
+
+export const select{{pascalCase name}} = state => state.{{camelCase name}}
+export const select{{pascalCase name}}Data = createSelector(select{{pascalCase name}}, ({{camelCase name}}) => {{camelCase name}}.data)

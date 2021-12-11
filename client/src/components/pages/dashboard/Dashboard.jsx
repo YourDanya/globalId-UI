@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { selectUserData } from '../../../redux/user.slice';
+import { selectUserData } from '../../../redux/user/user.slice';
 import Spinner from '../../layout/Spinner';
 import WithSpinner from '../../layout/WithSpinner/WithSpinner';
 

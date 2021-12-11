@@ -3,8 +3,10 @@ import createSagaMiddleware from '@redux-saga/core'
 
 import logger from "redux-logger";
 
-import userReducer from "./user.slice";
+import userReducer from "./user/user.slice";
 import loadingReducer from './loading.slice'
+//*** GENERATED IMPORTS GO HERE ***
+
 import rootSaga from "./rootSaga";
 
 
@@ -17,7 +19,8 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') customMiddl
 const store = configureStore({
 	reducer: {
 		user: userReducer,
-		loading: loadingReducer
+		loading: loadingReducer,
+		//*** GENERATED REDUCERS GO HERE ***
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(customMiddleware)
 })
