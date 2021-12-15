@@ -15,7 +15,9 @@ dotenv.config({
 
 
 export const signUp = async (req, res) => {
+   console.log(req.body)
   let { name, email, password } = req.body;
+ 
 
   //check if user exists
   let user = await User.findOne({ $or: [{ email }, { name } ] })
@@ -89,7 +91,7 @@ export const login = async (req, res) => {
 
 export const loginWithGoogle = async (req, res) => {
   const { name, email, picture } = req.credentials
-  const user = await User.findOneAndUpdate({ email }, { $setOnInsert: { name: email, email, avatar: picture, realName: name } }, { upsert: true, new: true }) //find or create
+  const user = await User.findOneAndUpdate({ email }, { $setOnInsert: { name: email, email, realName: name } }, { upsert: true, new: true }) //find or create
 
   if (!user) return res.status(500).send('Error: unable to log in with Google')
 
@@ -103,3 +105,15 @@ export const logout = (req, res) => {
   res.clearCookie('jwt')
   res.status(200).send('Log out successful');
 };
+
+  // export async function isAuthenticated(req, res, next) {
+  //   let token
+  //   if (req.cookies.jwt) {
+  //     token = req.cookies.jwt
+  //   }
+  //   if (!token) {
+  //     return res.send(false)
+  //   }
+
+  //   if
+  // }

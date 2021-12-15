@@ -4,12 +4,14 @@ import {
 	all
 } from '@redux-saga/core/effects'
 import userSaga from './user/user.saga'
+import profileSaga  from './profile/profile.saga';
 //*** GENERATED IMPORTS GO HERE ***
 
 export default function* rootSaga() {
 	const sagas = [
 		userSaga,
-		//*** GENERATED SAGAS GO HERE ***
+		profileSaga,
+//*** GENERATED SAGAS GO HERE ***
 	]
 
 	const retrySagas = yield sagas.map((saga) => {

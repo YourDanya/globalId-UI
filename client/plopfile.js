@@ -34,7 +34,7 @@ const config = plop => {
     ]
   })
 
-	plop.setGenerator('saga', {
+	plop.setGenerator('slice', {
 		prompts: [
 			{
 				type: 'input',
@@ -45,13 +45,13 @@ const config = plop => {
 		actions: [
 			{
 				type: 'add',
-        path: 'src/redux/{{name}}/{{name}}.saga.js',
-        templateFile: 'templates/saga.js.hbs'
+        path: 'src/redux/{{name}}/{{name}}.slice.js',
+        templateFile: 'templates/slice.js.hbs'
 			},
 			{
 			  path: 'src/redux/store.js',
 			  pattern: /(\/\/\*\*\* GENERATED IMPORTS GO HERE \*\*\*)/g,
-			  template: 'import {{camelCase name}}Reducer  from \'./{{name}}/{{name}}.saga\';\n$1',
+			  template: 'import {{camelCase name}}Reducer  from \'./{{name}}/{{name}}.slice\';\n$1',
 			  type: 'modify',
 			}, 
 			{

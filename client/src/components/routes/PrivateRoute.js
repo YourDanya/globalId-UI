@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import WithSpinner from '../layout/WithSpinner/WithSpinner';
-import Spinner from '../layout/Spinner';
 import { selectAuthLoading } from '../../redux/loading.slice';
 
 const PrivateRoute = ({

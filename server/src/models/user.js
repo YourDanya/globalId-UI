@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import dotenv from 'dotenv'
+
+
+dotenv.config({ path: './src/.env' })
 
 const userSchema = mongoose.Schema({
   name: {
@@ -8,7 +12,10 @@ const userSchema = mongoose.Schema({
     unique: [true, "This name already exists"]
   },
   realName: String, 
-  avatar: String,
+  avatar: {
+    type: String,
+    default: process.env.DEFAULT_AVATAR
+  },
   email: {
     type: String,
     unique: [true, "This email already exists"],

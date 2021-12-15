@@ -15,7 +15,7 @@ const initialState = {
 			isLoading: false,
 	    message: '',
 	  }
-	}
+	},
   
 }
 

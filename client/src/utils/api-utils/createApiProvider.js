@@ -12,51 +12,51 @@ const DEFAULT_BASE_URL = process.env.NODE_ENV === 'production' ? process.env.REA
 
 
 const createApiProvider = (BASE_URL = DEFAULT_BASE_URL) => ({
-	getAll: async (resource) => {
+	getAll: async (resource, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.get(`${BASE_URL}/${resource}`, {withCredentials: true})
+			.get(`${BASE_URL}/${resource}`, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	getSingle: async (resource, id) => {
+	getSingle: async (resource, id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.get(`${BASE_URL}/${resource}/${id}`, {withCredentials: true})
+			.get(`${BASE_URL}/${resource}/${id}`, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	post: async (resource, model) => {
+	post: async (resource, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.post(`${BASE_URL}/${resource}`, model, {withCredentials: true})
+			.post(`${BASE_URL}/${resource}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	postSingle: async (resource, id, model) => {
+	postSingle: async (resource, id, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.post(`${BASE_URL}/${resource}/${id}`, model, {withCredentials: true})
+			.post(`${BASE_URL}/${resource}/${id}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	put: async (resource, model) => {
+	put: async (resource, model, {withCredentials =  true, ...otherSettings} = {withCredentials: true}) => {
 		return await axios
-			.put(`${BASE_URL}/${resource}`, model, {withCredentials: true})
+			.put(`${BASE_URL}/${resource}`, model, {withCredentials, ...otherSettings})
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	patch: async (resource, model) => {
+	patch: async (resource, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.patch(`${BASE_URL}/${resource}`, model, {withCredentials: true})
+			.patch(`${BASE_URL}/${resource}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	remove: async (resource, id) => {
+	remove: async (resource, id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.delete(`${BASE_URL}/${resource}`, id, {withCredentials: true})
+			.delete(`${BASE_URL}/${resource}`, id, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},

@@ -14,7 +14,7 @@ import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, l
 
 
 
-const getUserDataSaga = withLoading(function* () {
+export const getUserDataSaga = withLoading(function* () {
     const userData = yield userApi.getSingle('user-data')
     yield put(setUserData(userData))
 
