@@ -34,6 +34,8 @@ const createApiProvider = (BASE_URL = DEFAULT_BASE_URL) => ({
 	},
 
 	postSingle: async (resource, id, model) => {
+		console.log('inside post single')
+		console.log(`${BASE_URL}/${resource}/${id}`)
 		return await axios
 			.post(`${BASE_URL}/${resource}/${id}`, model, {withCredentials: true})
 			.then(handleResponse)

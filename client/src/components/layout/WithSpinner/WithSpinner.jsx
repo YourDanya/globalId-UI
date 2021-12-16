@@ -4,6 +4,7 @@ import React from 'react'
 
 const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
 	// useEffect(() => console.log(is))
+	console.log(isLoading)
 	return (
 		isLoading
 			?

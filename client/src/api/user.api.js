@@ -4,6 +4,7 @@ import baseUrl from './baseUrl'
 const userApi = new ApiCore({
 	getAll: true,
 	getSingle: true,
+	postSingle: true,
 	post: true,
 	put: false,
 	patch: true,
