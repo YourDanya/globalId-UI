@@ -6,17 +6,19 @@ import { deleteFileFromAWS, uploadFileToAWS } from '../../utils/s3.utils.js';
 
 //property decoded is created by jwtParser() from /utils
 
-export async function getUserData(req, res, next) {
+export const getUserData =async(req, res, next)=> {
     const user = await User.findById(req.decoded.id);
     res.send(user)
 };
 
-export async function setUserData(req, res) {
-    const data = req.body
-    User.updateOne({ _id: req.decoded.id }, {
-        $set: { data }
-    })
+export const setUserData= async (req, res, next)=> {
+    await User.findByIdAndUpdate(req.decoded.id, req.body)
     res.send('user data set successfully')
+}
+
+
+export const updateUserData= async (req, res, next)=> {
+    res.send('user data updated successfully')
 }
 
 export async function setAvatar(req, res) {
@@ -27,7 +29,7 @@ export async function setAvatar(req, res) {
    //upload new avatar and delete previous
    await uploadFileToAWS({...avatar, name: fileName})
    const currentUser = await User.findById(req.decoded.id)
-   if (currentUser.avatar && (!(currentUser.avatar == process.env.DEFAULT_AVATAR))) deleteFileFromAWS(currentUser.avatar)
+   if (currentUser.avatar && (!(currentUser.avatar === process.env.DEFAULT_AVATAR))) deleteFileFromAWS(currentUser.avatar)
   
    //change avatar in db
    currentUser.avatar = fileName
@@ -46,7 +48,7 @@ export async function activateUser(req, res) {
     let token_cookie = req.cookies.jwt;
     console.log(token);
     console.log(token_cookie);
-    if (token == token_cookie) {
+    if (token === token_cookie) {
         let id = req.decoded.id;
         await User.findByIdAndUpdate(id, { $set: { active: true } });
         res.send('Verify done success');
@@ -54,3 +56,4 @@ export async function activateUser(req, res) {
 
     else { res.send('Token doesnt match') }
 };
+

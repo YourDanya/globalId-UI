@@ -11,7 +11,6 @@ return function* (...args) {
 	
 	let i = 0
 	while (i < loadingSetters.length) {
-		console.log(loadingSetters[i])
 		yield put(loadingSetters[i]({success, isLoading, message}))
 		i++
 	}

@@ -33,6 +33,7 @@ const createApiProvider = (BASE_URL = DEFAULT_BASE_URL) => ({
 			.catch(handleError);
 	},
 
+	// postSingle: async (resource, id, model) => {
 	postSingle: async (resource, id, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
 			.post(`${BASE_URL}/${resource}/${id}`, model, { withCredentials, ...otherSettings })

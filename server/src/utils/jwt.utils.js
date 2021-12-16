@@ -3,7 +3,7 @@ import { promisify } from 'util'
 
 
   
- export  const addJwtCookie = (res, value) =>{
+ export const addJwtCookie = (res, value) =>{
     const token = jwt.sign({id: value},   process.env.JWT_SECRET,{
       expiresIn: process.env.JWT_SECRET_IN
     })
@@ -23,10 +23,7 @@ import { promisify } from 'util'
   }
 
   export async function jwtParser(req, res, next) {
-    let token
-    if(req.cookies.jwt) {
-      token = req.cookies.jwt
-    }
+    let token=req.cookies.jwt
     if(!token){
       return res.status(400).send('No auth token found')
     }

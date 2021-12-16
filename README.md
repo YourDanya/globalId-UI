@@ -11,11 +11,13 @@ You can configure generator in plopfile.js
 
 TODOS: (in logical order)
 
-❌ Fix styles
+
 
 ❌ Create global error handler on /server
 
-❌ Add profile settings
+❌ Filter data on update (/server)
+
+❌ Fix styles
 
 ❌ Create /admin
 

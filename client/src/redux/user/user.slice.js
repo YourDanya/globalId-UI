@@ -1,37 +1,48 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createSelector } from 'reselect'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createSelector} from 'reselect'
 import userApi from '../../api/user.api'
 import authApi from '../../api/auth.api'
 
 const initialState = {
-  data: null
+    data: null
 }
 
 const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    setUserData(state, { payload }) {
-      state.data = payload
-    },
-    getUserData() {},
-    loginWithGoogle() {},
-    loginWithNameAndPassword() {},
-    createUserWithNameAndPassword() {},
-    logout() {},
-  }
+    name: 'user',
+    initialState,
+    reducers: {
+        setUserData(state, {payload}) {
+            state.data = payload
+        },
+        getUserData() {
+        },
+        loginWithGoogle() {
+        },
+        loginWithNameAndPassword() {
+        },
+        createUserWithNameAndPassword() {
+        },
+        logout() {
+        },
+        updateUserData() {
+        }
+    }
 })
 
 export default userSlice.reducer
 export const {
-  setUserData,
-  getUserData,
-  loginWithNameAndPassword,
-  loginWithGoogle,
-  createUserWithNameAndPassword,
-	logout
+    setUserData,
+    getUserData,
+    loginWithNameAndPassword,
+    loginWithGoogle,
+    createUserWithNameAndPassword,
+    logout,
+    updateUserData
 } = userSlice.actions
 
 export const selectUser = state => state.user
-export const selectUserData = createSelector(selectUser, (user) => user.data)
+export const selectUserData = createSelector([selectUser], user => {
+    console.log(user)
+    return user.data
+})
 

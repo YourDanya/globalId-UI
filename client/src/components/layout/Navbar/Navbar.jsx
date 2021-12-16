@@ -14,6 +14,11 @@ const Navbar = ({ isAuthenticated, logout }) => {
           <span className={styles.hide_if_small}>Dashboard</span>
         </Link>
       </li>
+      <li>
+        <Link to='/profile-settings'>
+          ⚙️
+        </Link>
+      </li>
       {
         isAuthenticated ? 
           <li>
