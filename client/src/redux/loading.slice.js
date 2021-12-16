@@ -29,6 +29,10 @@ const loadingSlice = createSlice({
     setAuthLoading(state, { payload }) {
       state.user.auth = payload
     },
+		setAuthLoadingSilently(state, { payload }) {
+			payload.message = ''
+		  state.user.auth = payload
+		}
   }
 })
 
@@ -36,6 +40,7 @@ export default loadingSlice.reducer
 export const {
   setUserDataLoading,
   setAuthLoading,
+	setAuthLoadingSilently
 } = loadingSlice.actions
 
 export const selectLoading = state => state.loading

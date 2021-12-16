@@ -9,7 +9,7 @@ import {
 import authApi from '../../api/auth.api'
 import userApi from '../../api/user.api'
 import withLoading from '../../utils/redux-utils/withLoading.saga'
-import { setAuthLoading, setUserDataLoading } from '../loading.slice'
+import { setAuthLoading, setAuthLoadingSilently, setUserDataLoading } from '../loading.slice'
 import { createUserWithNameAndPassword, getUserData, loginWithNameAndPassword, loginWithGoogle, logout, setUserData } from './user.slice'
 
 
@@ -19,7 +19,7 @@ export const getUserDataSaga = withLoading(function* () {
     yield put(setUserData(userData))
 
     return userData.message
-}, setUserDataLoading, setAuthLoading)
+}, setUserDataLoading, setAuthLoadingSilently)
 
 const handleAuth = withLoading(function* (auth) {
     const authMessage = yield call(auth)

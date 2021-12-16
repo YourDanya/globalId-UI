@@ -28,7 +28,7 @@ import { promisify } from 'util'
       token = req.cookies.jwt
     }
     if(!token){
-      return res.status(400).send('jwtParser error: no token found')
+      return res.status(400).send('No auth token found')
     }
     req.decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     next()
