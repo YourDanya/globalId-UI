@@ -1,4 +1,7 @@
+import AWS from 'aws-sdk'
+
 import User from "../../models/user.js"
+import { deleteFileFromAWS, uploadFileToAWS } from '../../utils/s3.utils.js';
 
 
 //property decoded is created by jwtParser() from /utils
@@ -13,8 +16,26 @@ export const setUserData= async (req, res, next)=> {
     res.send('user data set successfully')
 }
 
+
 export const updateUserData= async (req, res, next)=> {
     res.send('user data updated successfully')
+}
+
+export async function setAvatar(req, res) {
+    console.log(req.files)
+   const avatar = req.files.avatar
+   const fileName = `${Date.now()}${req.files.avatar.name}`
+
+   //upload new avatar and delete previous
+   await uploadFileToAWS({...avatar, name: fileName})
+   const currentUser = await User.findById(req.decoded.id)
+   if (currentUser.avatar && (!(currentUser.avatar === process.env.DEFAULT_AVATAR))) deleteFileFromAWS(currentUser.avatar)
+  
+   //change avatar in db
+   currentUser.avatar = fileName
+   await currentUser.save()
+
+   res.send('Avatar successfully changed')
 }
 
 export async function getAllUsers(req, res) {

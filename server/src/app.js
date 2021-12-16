@@ -4,6 +4,7 @@ import cors from 'cors'
 import helmet from 'helmet';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
 
 import router from './routes/router.js'
 import connectDB from './configs/mongo.js';
@@ -28,6 +29,11 @@ app.use(cors({
 }))
 
 app.use(cookieParser())
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/',
+  limits: 50 * 1024 * 1024
+}))
 app.use(helmet())
 
 app.use('/', router)

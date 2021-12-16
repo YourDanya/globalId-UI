@@ -12,7 +12,6 @@ const Landing = ({ isAuthenticated }) => {
 
   return (
     <section className={styles.landing}>
-      <h2 style={{color: 'black'}}>Choose auth method</h2>
       <div className={styles.dark_overlay}>
         <div className={styles.landing_inner}>
           <h1 className={styles.x_large}>MERN Boilerplate</h1>

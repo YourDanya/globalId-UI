@@ -4,6 +4,7 @@ import userApi from '../api/user.api'
 import authApi from '../api/auth.api'
 
 const initialState = {
+<<<<<<< HEAD
     user: {
         data: {
             success: false,
@@ -22,6 +23,21 @@ const initialState = {
         }
     }
 
+=======
+	user: {
+		data: {
+	    success: false,
+			isLoading: false,
+	    message: '',
+	  },
+	  auth: {
+	    success: false,
+			isLoading: false,
+	    message: '',
+	  }
+	},
+  
+>>>>>>> origin/main
 }
 
 const loadingSlice = createSlice({

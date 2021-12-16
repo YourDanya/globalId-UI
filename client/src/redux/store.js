@@ -5,6 +5,7 @@ import logger from "redux-logger";
 
 import userReducer from "./user/user.slice";
 import loadingReducer from './loading.slice'
+import profileReducer  from './profile/profile.slice';
 //*** GENERATED IMPORTS GO HERE ***
 
 import rootSaga from "./rootSaga";
@@ -20,7 +21,8 @@ const store = configureStore({
 	reducer: {
 		user: userReducer,
 		loading: loadingReducer,
-		//*** GENERATED REDUCERS GO HERE ***
+		profile: profileReducer,
+//*** GENERATED REDUCERS GO HERE ***
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(customMiddleware)
 })
