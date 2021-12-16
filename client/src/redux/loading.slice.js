@@ -55,5 +55,6 @@ export const {
 export const selectLoading = state => state.loading
 
 export const selectUserLoading = createSelector(selectLoading, (loading) => loading.user)
-export const selectUserDataLoading = createSelector(selectUserLoading, (userLoading) => !userLoading.data.success)
+export const selectFetchUserDataLoading = createSelector(selectUserLoading, (userLoading) => userLoading.data)
 export const selectAuthLoading = createSelector(selectUserLoading, (userLoading) => userLoading.auth)
+export const selectUpdateUserDataLoading = createSelector(selectUserLoading, (userLoading) => userLoading.update)

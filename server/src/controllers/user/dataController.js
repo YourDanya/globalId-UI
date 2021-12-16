@@ -12,7 +12,16 @@ export const getUserData =async(req, res, next)=> {
 };
 
 export const setUserData= async (req, res, next)=> {
-    await User.findByIdAndUpdate(req.decoded.id, req.body)
+    const {name} = req.body
+
+    //check uniqueness
+    const userWithSameName = await User.findOne({name})
+    if (userWithSameName) {
+        if (userWithSameName._id == req.decoded.id) return res.status(400).send('It\'s already your name')
+        return res.status(400).send('Name should be unique')
+    }
+
+    await User.findByIdAndUpdate(req.decoded.id, {name})
     res.send('user data set successfully')
 }
 

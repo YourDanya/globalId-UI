@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import { connect } from 'react-redux';
 import AuthMenu from '../pages/Auth/AuthMenu';
 import Landing from '../pages/Landing/Landing';
-import { selectAuthLoading, selectUserDataLoading } from '../../redux/loading.slice';
+import { selectAuthLoading, selectFetchUserDataLoading } from '../../redux/loading.slice';
 import Navbar from '../layout/Navbar/Navbar';
 import Dashboard from "../pages/Dashboard/Dashboard";
 import WithSpinner from "../layout/WithSpinner/WithSpinner";
@@ -26,7 +26,7 @@ const Routes = ({isAuthLoading, isUserDataLoading}) => {
 };
 
 const mapStateToProps = (state) => ({
-  isUserDataLoading: selectUserDataLoading(state).isLoading,
+  isUserDataLoading: selectFetchUserDataLoading(state).isLoading,
   isAuthLoading: selectAuthLoading(state).isLoading
 })
 

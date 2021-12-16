@@ -57,9 +57,10 @@ const logoutSaga = withLoading(function* () {
 }, setFetchUserDataLoading)
 
 const updateUserDataSaga = withLoading(function* ({payload}) {
-    console.log('inside user saga')
-    yield userApi.postSingle('user-data', payload)
+    const message = yield userApi.postSingle('user-data', payload)
     yield call(getUserDataSaga)
+    
+    return message
 }, setUpdateUserDataLoading)
 
 export default function* userSaga() {

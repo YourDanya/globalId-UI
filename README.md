@@ -12,6 +12,11 @@ You can configure generator in plopfile.js
 TODOS: (in logical order)
 
 
+❌ change name on the go (separate saga)
+
+❌ handle error and success messages with pop-ups (right bottom corner)
+
+❌ Check name uniqueness automatically (now it's inside 2 controllers)
 
 ❌ Create global error handler on /server
 

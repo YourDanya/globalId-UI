@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
-import { selectAuthLoading, selectUserDataLoading } from '../../../redux/loading.slice'
+import { selectAuthLoading, selectFetchUserDataLoading } from '../../../redux/loading.slice'
 import { loginWithGoogle } from '../../../redux/user/user.slice'
 import AuthMessage from '../../layout/AuthMessage'
 import GoogleLoginButton from './oauth-buttons/GoogleLoginButton'
@@ -49,7 +49,7 @@ function AuthMenu({ isAuthenticated, isLoadingUser, isLoadingAuth, loginWithGoog
 }
 
 const mapStateToProps = state => ({
-	isLoadingUser: selectUserDataLoading(state).isLoading,
+	isLoadingUser: selectFetchUserDataLoading(state).isLoading,
 	isLoadingAuth: selectAuthLoading(state).isLoading,
   isAuthenticated: selectAuthLoading(state).success
 })
