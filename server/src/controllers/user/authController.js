@@ -25,11 +25,11 @@ export const signUp = async (req, res) => {
     let message
     let doesEmailExist
     let doesNameExist
-    if (user.email == email) {
+    if (user.email === email) {
       doesEmailExist = true
       message = 'Email is already registered'
     }
-    if (user.name == name) {
+    if (user.name === name) {
       doesNameExist = true
       message = 'Name should be unique'
     }

@@ -6,13 +6,12 @@ export default class ApiCore {
 			this.getAll = (settings) => {
 				return apiProvider.getAll(options.url, settings);
 			};
-		
 
 
 			this.getSingle = (id, settings) => {
 				return apiProvider.getSingle(options.url, id, settings);
 			};
-		
+
 
 
 			this.post = (model, settings) => {

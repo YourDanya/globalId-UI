@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useState} from "react"
 import {createStructuredSelector} from "reselect";
-import {selectUser, selectUserData, updateUserData} from "../../../redux/user/user.slice";
+import {selectUserData, updateUserData, updateUserPassword} from "../../../redux/user/user.slice";
 import {selectUpdateUserDataLoading} from '../../../redux/loading.slice'
 import {connect} from "react-redux";
 
@@ -9,13 +9,30 @@ import brokenImage from '../../../assets/icons/broken-image.png'
 import baseUrl from "../../../api/baseUrl";
 import { changeAvatar } from "../../../redux/profile/profile.slice";
 
-const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, changeNameMessage}) =>{
+const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, changeNameMessage, updatePassword}) =>{
 
-    const [newName, setNewName]=useState(name)
+    const [allValues, setAllValues] = useState({
+        newName: name,
+        currentPassword: '',
+        newPassword: '',
+        passwordConfirm: ''
+    })
 
-    const onSubmit = event =>{
+
+    const handleChange= event => {
+        setAllValues({...allValues, [event.target.name] : event.target.value})
+    }
+
+    const onNameChangeSubmit = event =>{
         event.preventDefault()
-        updateData({name: newName})
+        updateData({name: allValues.newName})
+    }
+
+    const onPasswordUpdateSubmit = event =>{
+        event.preventDefault()
+        console.log(allValues)
+        const {newName, ...passValues}= allValues
+        updatePassword(passValues)
     }
 
     async function handleAvatarInput(event) {
@@ -27,18 +44,45 @@ const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, chan
         <div>{name}</div>
         <label htmlFor="Change avatar">Change avatar</label>
         <input type='file' name='Change avatar' onChange={handleAvatarInput} />
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onNameChangeSubmit}>
             <input
-                name={'name'}
+                name={'newName'}
                 type={'text'}
                 placeholder={'name'}
-                value={newName}
-                onChange={(event)=>setNewName(event.target.value)}
+                value={allValues.newName}
+                onChange={handleChange}
                 required
             />
             <button type={'submit'}>Change name</button>
         </form>
         {changeNameMessage}
+        <form onSubmit={onPasswordUpdateSubmit}>
+            <input
+                name={'currentPassword'}
+                type={'password'}
+                placeholder={'currentPassword'}
+                value={allValues.currentPassword}
+                onChange={handleChange}
+                required
+            />
+            <input
+                name={'newPassword'}
+                type={'password'}
+                placeholder={'new password'}
+                value={allValues.newPassword}
+                onChange={handleChange}
+                required
+            />
+            <input
+                name={'passwordConfirm'}
+                type={'password'}
+                placeholder={'password confirm'}
+                value={allValues.passwordConfirm}
+                onChange={handleChange}
+                required
+            />
+            <button type={'submit'}>Change pass</button>
+        </form>
         
     </div>
 }
@@ -50,7 +94,8 @@ const mapStateToProps= state => ({
 
 const mapDispatchToProps = dispatch =>({
     updateData: data => dispatch(updateUserData(data)),
-    changeAvatar: avatar => dispatch(changeAvatar(avatar))
+    changeAvatar: avatar => dispatch(changeAvatar(avatar)),
+    updatePassword: data => dispatch(updateUserPassword(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings)

@@ -7,14 +7,11 @@ import { connect } from 'react-redux';
 import AuthMenu from '../pages/Auth/AuthMenu';
 import Landing from '../pages/Landing/Landing';
 import { selectAuthLoading, selectFetchUserDataLoading } from '../../redux/loading.slice';
-import Navbar from '../layout/Navbar/Navbar';
-import Dashboard from "../pages/Dashboard/Dashboard";
-import WithSpinner from "../layout/WithSpinner/WithSpinner";
 import ProfileSettingsContainer from "../pages/profile-settings/Profile.container";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 
 const Routes = ({isAuthLoading, isUserDataLoading}) => {
-// useEffect(() => console.log(loading.user.data), [loading])
 
   return <Switch>
         <Route exact path='/'  component={Landing} />

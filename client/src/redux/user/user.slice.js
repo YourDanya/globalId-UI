@@ -25,6 +25,8 @@ const userSlice = createSlice({
         logout() {
         },
         updateUserData() {
+        },
+        updateUserPassword() {
         }
     }
 })
@@ -37,7 +39,8 @@ export const {
     loginWithGoogle,
     createUserWithNameAndPassword,
     logout,
-    updateUserData
+    updateUserData,
+    updateUserPassword
 } = userSlice.actions
 
 export const selectUser = state => state.user

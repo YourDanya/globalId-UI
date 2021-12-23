@@ -1,6 +1,6 @@
 import express from "express"
 
-import { getUserData, setUserData, activateUser, updateUserData, setAvatar} from "../../controllers/user/dataController.js";
+import { getUserData, setUserData, activateUser, updateUserData, setAvatar, updateMyPassword} from "../../controllers/user/dataController.js";
 import { jwtParser } from "../../utils/jwt.utils.js";
 import { verifyImageFiles } from "../../utils/upload.utils.js";
 
@@ -14,6 +14,9 @@ router.route('/user-data/')
 
 router.route('/user-data/profile')
     .post(updateUserData)
+
+router.route('/updateMyPassword')
+    .post(updateMyPassword)
 
 router.get('/verify', activateUser)
 

@@ -38,6 +38,19 @@ const userSchema = mongoose.Schema({
     }
   }
 });
+
+// userSchema.pre('save', async function(next) {
+//   // Only run this function if password was actually modified
+//
+//
+//   // Hash the password with cost of 12
+//   this.password = await bcrypt.hash(this.password, 12);
+//
+//   // Delete passwordConfirm field
+//   this.passwordConfirm = undefined;
+//   next();
+// });
+
 userSchema.post('save', function(error, doc, next) {
   if ((error.name === 'MongoError' || error.name === 'MongoServerError') && error.code === 11000) {
     next(new Error('Email must be unique'));

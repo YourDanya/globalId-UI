@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk'
 
 import User from "../../models/user.js"
-import { deleteFileFromAWS, uploadFileToAWS } from '../../utils/s3.utils.js';
-
+import { deleteFileFromAWS, uploadFileToAWS } from '../../utils/s3.utils.js'
+import bcrypt from 'bcryptjs'
 
 //property decoded is created by jwtParser() from /utils
 
@@ -17,7 +17,7 @@ export const setUserData= async (req, res, next)=> {
     //check uniqueness
     const userWithSameName = await User.findOne({name})
     if (userWithSameName) {
-        if (userWithSameName._id == req.decoded.id) return res.status(400).send('It\'s already your name')
+        if (userWithSameName._id === req.decoded.id) return res.status(400).send('It\'s already your name')
         return res.status(400).send('Name should be unique')
     }
 
@@ -66,3 +66,16 @@ export async function activateUser(req, res) {
     else { res.send('Token doesnt match') }
 };
 
+export const updateMyPassword= async(req, res, next) =>{
+    console.log(req.body)
+    const user = await User.findById(req.decoded.id)
+    console.log(req.body.currentPassword)
+    // if (!(await bcrypt.compare(req.body.currentPassword, user.password))) {
+    //     res.send('Your current password is wrong.', 401)
+    // }
+    if (req.body.newPassword!==req.body.passwordConfirm) res.send('password and password confirm do not match')
+    user.password = await bcrypt.hash(req.body.newPassword, 12)
+    await user.save()
+
+    res.send('password updated successfully')
+}

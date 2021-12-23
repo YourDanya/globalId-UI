@@ -34,13 +34,16 @@ const loadingSlice = createSlice({
         setUpdateUserDataLoading(state, {payload}) {
             state.user.update=payload
         },
+        setUpdateUserPasswordLoading(state, {payload}) {
+            state.user.update=payload
+        },
         setAuthLoading(state, {payload}) {
             state.user.auth = payload
         },
-    		setAuthLoadingSilently(state, { payload }) {
-    		  payload.message = ''
-    		  state.user.auth = payload
-    		}
+        setAuthLoadingSilently(state, { payload }) {
+            payload.message = ''
+            state.user.auth = payload
+        }
     }
 })
 
@@ -50,6 +53,7 @@ export const {
     setAuthLoading,
     setUpdateUserDataLoading,
     setAuthLoadingSilently,
+    setUpdateUserPasswordLoading
 } = loadingSlice.actions
 
 export const selectLoading = state => state.loading
@@ -58,3 +62,4 @@ export const selectUserLoading = createSelector(selectLoading, (loading) => load
 export const selectFetchUserDataLoading = createSelector(selectUserLoading, (userLoading) => userLoading.data)
 export const selectAuthLoading = createSelector(selectUserLoading, (userLoading) => userLoading.auth)
 export const selectUpdateUserDataLoading = createSelector(selectUserLoading, (userLoading) => userLoading.update)
+export const selectUpdateUserPasswordLoading= createSelector(selectUserLoading, (userLoading) => userLoading.update)

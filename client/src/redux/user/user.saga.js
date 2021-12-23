@@ -9,7 +9,13 @@ import {
 import authApi from '../../api/auth.api'
 import userApi from '../../api/user.api'
 import withLoading from '../../utils/redux-utils/withLoading.saga'
-import { setAuthLoading, setFetchUserDataLoading, setAuthLoadingSilently, setUpdateUserDataLoading } from '../loading.slice'
+import {
+    setAuthLoading,
+    setFetchUserDataLoading,
+    setAuthLoadingSilently,
+    setUpdateUserDataLoading,
+    setUpdateUserPasswordLoading
+} from '../loading.slice'
 import {
     createUserWithNameAndPassword,
     getUserData,
@@ -17,7 +23,7 @@ import {
     loginWithGoogle,
     logout,
     setUserData,
-    updateUserData
+    updateUserData, updateUserPassword
 } from './user.slice'
 
 
@@ -59,9 +65,14 @@ const logoutSaga = withLoading(function* () {
 const updateUserDataSaga = withLoading(function* ({payload}) {
     const message = yield userApi.postSingle('user-data', payload)
     yield call(getUserDataSaga)
-    
     return message
 }, setUpdateUserDataLoading)
+
+const updateUserPasswordSaga= withLoading( function* ({payload}){
+    const message= yield userApi.postSingle('updateMyPassword', payload)
+    yield call(getUserDataSaga)
+    return message
+}, setUpdateUserPasswordLoading)
 
 export default function* userSaga() {
     yield takeLatest(loginWithGoogle, loginWithGoogleSaga)
@@ -70,6 +81,7 @@ export default function* userSaga() {
     yield takeLatest(logout, logoutSaga)
     yield takeLatest(getUserData, getUserDataSaga)
     yield takeLatest(updateUserData, updateUserDataSaga)
+    yield takeLatest(updateUserPassword, updateUserPasswordSaga)
 }
 
 

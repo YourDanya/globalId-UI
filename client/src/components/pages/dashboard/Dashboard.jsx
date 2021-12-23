@@ -12,7 +12,6 @@ import { changeAvatar } from '../../../redux/profile/profile.slice';
 const Dashboard = ({user, changeAvatar}) => {
 
 
-
   return (
     <>
       <h1 className={styles.header}>Welcome to the DashBoard!</h1>
