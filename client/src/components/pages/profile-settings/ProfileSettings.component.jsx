@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {createStructuredSelector} from "reselect";
-import {selectUserData, updateUserData, updateUserPassword} from "../../../redux/user/user.slice";
+import {forgetUserPassword, selectUserData, updateUserData, updateUserPassword} from "../../../redux/user/user.slice";
 import {selectUpdateUserDataLoading} from '../../../redux/loading.slice'
 import {connect} from "react-redux";
 
@@ -9,13 +9,14 @@ import brokenImage from '../../../assets/icons/broken-image.png'
 import baseUrl from "../../../api/baseUrl";
 import { changeAvatar } from "../../../redux/profile/profile.slice";
 
-const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, changeNameMessage, updatePassword}) =>{
+const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, changeNameMessage, updatePassword, forgetPassword}) =>{
 
     const [allValues, setAllValues] = useState({
         newName: name,
         currentPassword: '',
         newPassword: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        email: ''
     })
 
 
@@ -37,6 +38,11 @@ const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, chan
 
     async function handleAvatarInput(event) {
         changeAvatar(event.target.files[0])
+    }
+
+    const onForgetPasswordSubmit= event =>{
+        event.preventDefault()
+        forgetPassword({email: allValues.email})
     }
 
     return <div className={styles.ProfileSettings}>
@@ -83,7 +89,18 @@ const ProfileSettings= ({userData:{name, avatar}, updateData, changeAvatar, chan
             />
             <button type={'submit'}>Change pass</button>
         </form>
-        
+
+        <form onSubmit={onForgetPasswordSubmit}>
+            <input
+                name={'email'}
+                type={'email'}
+                placeholder={'email'}
+                value={allValues.email}
+                onChange={handleChange}
+                required
+            />
+            <button type={'submit'}>reset pass</button>
+        </form>
     </div>
 }
 
@@ -95,7 +112,8 @@ const mapStateToProps= state => ({
 const mapDispatchToProps = dispatch =>({
     updateData: data => dispatch(updateUserData(data)),
     changeAvatar: avatar => dispatch(changeAvatar(avatar)),
-    updatePassword: data => dispatch(updateUserPassword(data))
+    updatePassword: data => dispatch(updateUserPassword(data)),
+    forgetPassword: data => dispatch(forgetUserPassword(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings)

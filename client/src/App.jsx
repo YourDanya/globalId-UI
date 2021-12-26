@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { getUserData } from './redux/user/user.slice';
 
 
-
 const App = ({ getUserData, match }) => {
   useEffect(() => {
     getUserData()

@@ -27,6 +27,10 @@ const userSlice = createSlice({
         updateUserData() {
         },
         updateUserPassword() {
+        },
+        forgetUserPassword(){
+        },
+        resetUserPassword(){
         }
     }
 })
@@ -40,7 +44,9 @@ export const {
     createUserWithNameAndPassword,
     logout,
     updateUserData,
-    updateUserPassword
+    updateUserPassword,
+    forgetUserPassword,
+    resetUserPassword
 } = userSlice.actions
 
 export const selectUser = state => state.user

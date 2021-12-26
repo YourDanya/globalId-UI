@@ -1,6 +1,6 @@
 import express from "express"
 
-import { getUserData, setUserData, activateUser, updateUserData, setAvatar, updateMyPassword} from "../../controllers/user/dataController.js";
+import {resetUserPassword, getUserData, setUserData, activateUser, updateUserData, setAvatar, updateUserPassword, forgotUserPassword} from "../../controllers/user/dataController.js";
 import { jwtParser } from "../../utils/jwt.utils.js";
 import { verifyImageFiles } from "../../utils/upload.utils.js";
 
@@ -15,8 +15,14 @@ router.route('/user-data/')
 router.route('/user-data/profile')
     .post(updateUserData)
 
-router.route('/updateMyPassword')
-    .post(updateMyPassword)
+router.route('/update-password')
+    .post(updateUserPassword)
+
+router.route('/forgot-password')
+    .post(forgotUserPassword)
+
+router.route('/reset-password/:token')
+    .post(resetUserPassword)
 
 router.get('/verify', activateUser)
 

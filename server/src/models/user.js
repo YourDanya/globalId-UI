@@ -36,7 +36,13 @@ const userSchema = mongoose.Schema({
       clicks: Number,
       loses: Number
     }
-  }
+  },
+  passwordResetToken: {
+    type: String
+  },
+  passwordResetExpires: {
+    type: Date
+  },
 });
 
 // userSchema.pre('save', async function(next) {

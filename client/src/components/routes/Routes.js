@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import AuthMenu from '../pages/Auth/AuthMenu';
 import Landing from '../pages/Landing/Landing';
 import { selectAuthLoading, selectFetchUserDataLoading } from '../../redux/loading.slice';
-import ProfileSettingsContainer from "../pages/profile-settings/Profile.container";
+import ProfileSettingsContainer from "../pages/profile-settings/ProfileSettings.container";
 import Dashboard from "../pages/dashboard/Dashboard";
+import PasswordReset from "../pages/password-reset/PasswordReset.Component";
 
 
 const Routes = ({isAuthLoading, isUserDataLoading}) => {
@@ -17,6 +18,7 @@ const Routes = ({isAuthLoading, isUserDataLoading}) => {
         <Route exact path='/'  component={Landing} />
         <PrivateRoute exact path='/dashboard' isLoading={isAuthLoading || isUserDataLoading} component={() => <Dashboard isLoading={isUserDataLoading}/>} />
         <PrivateRoute path={ '/profile-settings' } isLoading={ isAuthLoading || isUserDataLoading } component={ () => <ProfileSettingsContainer isLoading={isUserDataLoading} /> }/>
+        <Route path={ '/reset-password/:token' } component={PasswordReset}/>
         <Route path='/auth' component={AuthMenu} />
         <Route component={NotFound} />
       </Switch>

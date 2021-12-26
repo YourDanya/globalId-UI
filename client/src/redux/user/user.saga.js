@@ -1,10 +1,7 @@
 import {
     call,
     put,
-    takeEvery,
     takeLatest,
-    select,
-    delay
 } from '@redux-saga/core/effects'
 import authApi from '../../api/auth.api'
 import userApi from '../../api/user.api'
@@ -14,7 +11,8 @@ import {
     setFetchUserDataLoading,
     setAuthLoadingSilently,
     setUpdateUserDataLoading,
-    setUpdateUserPasswordLoading
+    setUpdateUserPasswordLoading,
+    setForgetUserPasswordLoading, setResetUserPasswordLoading,
 } from '../loading.slice'
 import {
     createUserWithNameAndPassword,
@@ -23,7 +21,10 @@ import {
     loginWithGoogle,
     logout,
     setUserData,
-    updateUserData, updateUserPassword
+    updateUserData,
+    updateUserPassword,
+    forgetUserPassword,
+    resetUserPassword
 } from './user.slice'
 
 
@@ -40,7 +41,6 @@ const handleAuth = withLoading(function* (auth) {
 
     return authMessage
 }, setAuthLoading)
-
 
 function* loginWithGoogleSaga({payload}) {
     yield call(handleAuth, async () => await authApi.postSingle('login-with-google', payload))
@@ -69,10 +69,23 @@ const updateUserDataSaga = withLoading(function* ({payload}) {
 }, setUpdateUserDataLoading)
 
 const updateUserPasswordSaga= withLoading( function* ({payload}){
-    const message= yield userApi.postSingle('updateMyPassword', payload)
+    const message= yield userApi.postSingle('update-password', payload)
     yield call(getUserDataSaga)
     return message
 }, setUpdateUserPasswordLoading)
+
+const forgetUserPasswordSaga= withLoading( function* ({payload}){
+    const message= yield userApi.postSingle('forgot-password', payload)
+    yield call(getUserDataSaga)
+    return message
+}, setForgetUserPasswordLoading)
+
+const resetUserPasswordSaga= withLoading( function* ({payload}){
+    console.log('inside reset pass saga')
+    const message= yield userApi.postSingle(`reset-password/${payload.token}`, payload)
+    yield call(getUserDataSaga)
+    return message
+}, setResetUserPasswordLoading)
 
 export default function* userSaga() {
     yield takeLatest(loginWithGoogle, loginWithGoogleSaga)
@@ -82,6 +95,8 @@ export default function* userSaga() {
     yield takeLatest(getUserData, getUserDataSaga)
     yield takeLatest(updateUserData, updateUserDataSaga)
     yield takeLatest(updateUserPassword, updateUserPasswordSaga)
+    yield takeLatest(forgetUserPassword, forgetUserPasswordSaga)
+    yield takeLatest(resetUserPassword, resetUserPasswordSaga)
 }
 
 
