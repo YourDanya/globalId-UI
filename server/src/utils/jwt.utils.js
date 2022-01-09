@@ -23,6 +23,7 @@ import { promisify } from 'util'
   }
 
   export async function jwtParser(req, res, next) {
+    console.log('jwt token')
     let token=req.cookies.jwt
     if(!token){
       return res.status(400).send('No auth token found')

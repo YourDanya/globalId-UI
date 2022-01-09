@@ -6,10 +6,11 @@ import dotenv from 'dotenv'
 dotenv.config({ path: './src/.env' })
 
 const userSchema = mongoose.Schema({
+  web3Address: String,
   name: {
     type: String,
     required: [true, "Name is required"],
-    unique: [true, "This name already exists"]
+    default: "NoName",
   },
   realName: String, 
   avatar: {
@@ -18,7 +19,6 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    unique: [true, "This email already exists"],
     lowercase: true,
     validate: [validator.isEmail, "Please enter a valid email"],
   },

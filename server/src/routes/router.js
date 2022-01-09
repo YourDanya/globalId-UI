@@ -15,7 +15,7 @@ router.use(express.urlencoded({extended: true}))
 
 
 router.use("/auth", loginRouter);
-router.use('/users', jwtParser, userDataRouter);
+router.use('/users', userDataRouter);
 router.use('/images', imagesRouter)
 
 router.get('/', (req, res) => {

@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs'
 import emailjs from 'emailjs-com'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
+import { isUserNameValid } from '../../utils/validation.utils.js'
 // import sendgridTransport from 'nodemailer-sendgrid-transport'
 // const transporter= nodemailer.createTransport(sendgridTransport({
 //     auth: {
@@ -21,17 +22,17 @@ export const getUserData = async (req, res, next) => {
 };
 
 export const setUserData = async (req, res, next) => {
-    const {name} = req.body
-
+    let {name} = req.body
+    if (!isUserNameValid(name)) return res.status(400).send('Only English symbols and underscores allowed!')
     //check uniqueness
-    const userWithSameName = await User.findOne({name})
+    const userWithSameName = await User.findOne({ name: new RegExp(`^${name}$`, 'i') })
     if (userWithSameName) {
         if (userWithSameName._id === req.decoded.id) return res.status(400).send('It\'s already your name')
-        return res.status(400).send('Name should be unique')
+        return res.status(400).send('Name already exists')
     }
 
     await User.findByIdAndUpdate(req.decoded.id, {name})
-    res.send('user data set successfully')
+    res.send('user edited successfully')
 }
 
 

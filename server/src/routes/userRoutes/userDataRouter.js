@@ -1,33 +1,35 @@
 import express from "express"
 
-import {resetUserPassword, getUserData, setUserData, activateUser, updateUserData, setAvatar, updateUserPassword, forgotUserPassword} from "../../controllers/user/dataController.js";
+import {resetUserPassword, getUserData, setUserData, activateUser, updateUserData, setAvatar, updateUserPassword, forgotUserPassword, getAllUsers} from "../../controllers/user/dataController.js";
 import { jwtParser } from "../../utils/jwt.utils.js";
 import { verifyImageFiles } from "../../utils/upload.utils.js";
 
 const router = express.Router();
 
-router.use(jwtParser)
 
 router.route('/user-data/')
-    .get(getUserData)
-    .post(setUserData)
+    .get(jwtParser, getUserData)
+    .post(jwtParser, setUserData)
+
+router.route('/user-data/all-users')
+    .get(getAllUsers)
 
 router.route('/user-data/profile')
-    .post(updateUserData)
+    .post(jwtParser, updateUserData)
 
 router.route('/update-password')
-    .post(updateUserPassword)
+    .post(jwtParser, updateUserPassword)
 
 router.route('/forgot-password')
-    .post(forgotUserPassword)
+    .post(jwtParser, forgotUserPassword)
 
 router.route('/reset-password/:token')
-    .post(resetUserPassword)
+    .post(jwtParser, resetUserPassword)
 
-router.get('/verify', activateUser)
+router.get('/verify', jwtParser, activateUser)
 
-router.get('/verify', activateUser)
-router.post('/user-data/profile/avatar', verifyImageFiles, setAvatar)
+router.get('/verify', jwtParser, activateUser)
+router.post('/user-data/profile/avatar', jwtParser, verifyImageFiles, setAvatar)
 
 
 export default router

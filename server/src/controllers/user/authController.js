@@ -99,6 +99,16 @@ export const loginWithGoogle = async (req, res) => {
   res.status(200).send('Logged in successfully')
 }
 
+export const loginWithWeb3 = async (req, res) => {
+  const { address } = req.body
+  const user = await User.findOneAndUpdate({ web3Address: address }, { $setOnInsert: { web3Address: address } }, { upsert: true, new: true }) //find or create
+
+  if (!user) return res.status(500).send('Error: unable to log in with web3')
+
+  addJwtCookie(res, user._id)
+  res.status(200).send('Logged in successfully')
+}
+
 
 
 export const logout = (req, res) => {

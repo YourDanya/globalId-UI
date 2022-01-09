@@ -1,35 +1,12 @@
-@import './_utilities'
-  
-body
-  margin: 0
-  box-sizing: border-box
-  background-color: #eef1f4
+.tip
+    position: relative
+    display: flex
+    width: fit-content
 
-#root
-  display: flex
-  justify-content: center
-
-code
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
-
-*
-  box-sizing: border-box
-  margin: 0
-  padding: 0
-
-body
-  font-family: 'Raleway', sans-serif
-  font-size: 1rem
-  line-height: 1.6
-  background-color: #fff
-  color: #333
-
-a
-  color: $primary-color
-  text-decoration: none
-
-ul
-  list-style: none
-
-img
-  width: 100%
+    &::after
+        content: '?'
+        font-size: 0.5em
+        display: block
+        position: relative
+        margin-left: 0.5em
+        margin-top: 0.2em
