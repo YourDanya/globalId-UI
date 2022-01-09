@@ -14,22 +14,22 @@ router.route('/user-data/')
 router.route('/user-data/all-users')
     .get(getAllUsers)
 
-router.route('/user-data/profile')
-    .post(jwtParser, updateUserData)
+// router.route('/user-data/profile')
+//     .post(jwtParser, updateUserData)
 
-router.route('/update-password')
-    .post(jwtParser, updateUserPassword)
+// router.route('/update-password')
+//     .post(jwtParser, updateUserPassword)
 
-router.route('/forgot-password')
-    .post(jwtParser, forgotUserPassword)
+// router.route('/forgot-password')
+//     .post(jwtParser, forgotUserPassword)
 
-router.route('/reset-password/:token')
-    .post(jwtParser, resetUserPassword)
+// router.route('/reset-password/:token')
+//     .post(jwtParser, resetUserPassword)
 
-router.get('/verify', jwtParser, activateUser)
+// router.get('/verify', jwtParser, activateUser)
 
-router.get('/verify', jwtParser, activateUser)
-router.post('/user-data/profile/avatar', jwtParser, verifyImageFiles, setAvatar)
+// router.get('/verify', jwtParser, activateUser)
+// router.post('/user-data/profile/avatar', jwtParser, verifyImageFiles, setAvatar)
 
 
 export default router
