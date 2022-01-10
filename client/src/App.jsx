@@ -35,7 +35,7 @@ function App({logout, editUser}) {
   const [showChangeNameModal, setShowChangeNameModal] = useState(false)
   let [maticPriceUSD, setMaticPriceUSD] = useState(0)
   let [maticPriceUAH, setMaticPriceUAH] = useState(0)
-  const [currencyIndex, setCurrencyIndex] = useState(parseInt(localStorage.getItem('icebreaker-currency-index')))
+  const [currencyIndex, setCurrencyIndex] = useState(parseInt(localStorage.getItem('icebreaker-currency-index')) || 0)
   const currencies = ['MATIC', 'UAH', 'USD']
 
   let web3js = new Web3(window.ethereum)
