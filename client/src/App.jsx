@@ -22,7 +22,7 @@ import ChangeNameForm from './components/ChangeNameForm';
 
 function App({logout, editUser}) {
   // const icebreakerAddress = '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7' // testnet
-  const icebreakerAddress = '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'
+  const icebreakerAddress = '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'; 
 
   const [user, setUser] = useState({
     challenges: [],
@@ -40,6 +40,8 @@ function App({logout, editUser}) {
   const currencies = ['MATIC', 'UAH', 'USD']
 
   let web3js = new Web3(window.ethereum)
+  let chainId = '137'; 
+  chainId = web3js.utils.toHex(chainId);
   let icebreaker = new web3js.eth.Contract(icebreakerAbi, icebreakerAddress)
 
 
@@ -175,6 +177,10 @@ function App({logout, editUser}) {
   useEffect(() => {
     (async () => {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }], 
+      });
       if (accounts) {
         user.currentAccount = accounts[0]
         setUser({ ...user })
