@@ -21,8 +21,8 @@ import userApi from './api/user.api';
 import ChangeNameForm from './components/ChangeNameForm';
 
 function App({logout, editUser}) {
-  // const icebreakerAddress = '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7' // testnet
-  const icebreakerAddress = '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'
+  const icebreakerAddress = '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7' // testnet
+  // const icebreakerAddress = '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c' // mainnet
 
   const [user, setUser] = useState({
     challenges: [],
