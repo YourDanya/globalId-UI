@@ -66,7 +66,7 @@ function App({logout, editUser}) {
         if (!user.currentAccount) return
 
         maticPriceUSD = (await axios.get('https://api.coinbase.com/v2/prices/MATIC-USD/spot')).data.data.amount
-        maticPriceUAH = (await axios.get('https://api.coinbase.com/v2/prices/MATIC-UAH/spot')).data.data.amount
+        maticPriceUAH = (await axios.get('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')).data.find(item => item.ccy == 'USD').sale * maticPriceUSD
         setMaticPriceUAH(maticPriceUAH)
         setMaticPriceUSD(maticPriceUSD)
 
