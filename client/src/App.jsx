@@ -211,7 +211,7 @@ function App({logout, editUser}) {
 
   return (
     <div>
-      <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}><a style={{color: 'black', textDecoration: 'none'}} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a></div>
+      <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}><a href='https://laughing-kirch-166b16.netlify.app/' style={{ color: 'black', textDecoration: 'none', marginRight: '30%' }} >Go to mainnet</a><a style={{color: 'black', textDecoration: 'none'}} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a></div>
       <button onClick={connectAccount}>
         Connect account
       </button>
