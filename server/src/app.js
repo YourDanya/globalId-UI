@@ -23,7 +23,7 @@ const port = process.env.PORT || 5000
 const app = express()
 
 app.use(cors({
-    origin: [process.env.FRONTEND_DEPLOY_ADDRESS, "http://localhost:3000"],
+    origin: [process.env.FRONTEND_DEPLOY_ADDRESS, "http://localhost:3000", 'https://quirky-jang-62bfee.netlify.app'],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true
 }))
