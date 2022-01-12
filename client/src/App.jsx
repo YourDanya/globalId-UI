@@ -239,8 +239,13 @@ function App({logout, editUser}) {
   }, [currencyIndex])
 
 
-  if (!window.ethereum) return alert('No wallet detected. You should install metamask or maybe other wallet')
-
+  if (!window.ethereum) {
+    alert('No wallet detected. You should install metamask or maybe other wallet')
+    return <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
+      <a style={{ color: 'black', textDecoration: 'none' }} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a>
+    </div>
+  }
+  
   return (
     <div>
       <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
