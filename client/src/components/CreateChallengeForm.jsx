@@ -24,13 +24,17 @@ function CreateChallengeForm({ user, createChallenge }) {
 				minutes: parseInt(e.target.timeoutMinutes.value),
 			})
 			let maticPrice
-			switch(currencies[currencyIndex]) {
-				case 'UAH': maticPrice = (await axios.get('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')).data.find(item => item.ccy == 'USD').sale * (await axios.get('https://api.coinbase.com/v2/prices/MATIC-USD/spot'))
-				break
-				case 'USD': maticPrice = (await axios.get('https://api.coinbase.com/v2/prices/MATIC-USD/spot')).data.data.amount
-				break
+			const USDToMatic = (await axios.get('https://api.coinbase.com/v2/prices/MATIC-USD/spot')).data.data.amount
+			const UAHToUSD = (await axios.get('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')).data.find(item => item.ccy == 'USD').sale
+			console.log(USDToMatic);
+			console.log(UAHToUSD);
+			switch (currencies[currencyIndex]) {
+				case 'UAH': maticPrice = UAHToUSD * USDToMatic
+					break
+				case 'USD': maticPrice = USDToMatic
+					break
 				case 'MATIC': maticPrice = 1
-				break
+					break
 			}
 			let challengerStakeAtRisk = Math.trunc((e.target.challengerStakeAtRisk.value / maticPrice) * 1000) / 1000
 			if (challengerStakeAtRisk >= user.balance) {
