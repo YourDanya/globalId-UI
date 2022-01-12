@@ -24,13 +24,15 @@ function App({logout, editUser}) {
   const chains = [
     {
       id: '137',
-      name: 'POLYGON_MAINNET',
-      icebreakerAddress: '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'
+      name: 'POLYGON MAINNET',
+      icebreakerAddress: '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c',
+      source: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
     },
     {
       id: '80001',
-      name: 'POLYGON_TESTNET',
-      icebreakerAddress: '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7'
+      name: 'POLYGON TESTNET (MUMBAI)',
+      icebreakerAddress: '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7',
+      source: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
     }
 ]
   const [currentChainIndex, setCurrentChainIndex] = useState(0)
@@ -206,10 +208,18 @@ function App({logout, editUser}) {
 
       let currentIcebreaker = new web3js.eth.Contract(icebreakerAbi, icebreakerAddress)
       setIcebreaker(currentIcebreaker)
-      await window.ethereum.request({
+      console.log('requesting chainib:', chainId);
+      try {await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId }],
-      });
+      })
+      } catch (error) {
+      // This error code indicates that the chain has not been added to MetaMask
+        if (error.code === 4902) {
+          alert(`You should add ${chains[currentChainIndex].name} to your wallet. Go to ${chains[currentChainIndex].source}`)
+        }
+      console.error(error);
+    }
 
       const accounts = await window.ethereum.request({ method: 'eth_accounts' })
       if (accounts) {
