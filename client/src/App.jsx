@@ -191,7 +191,7 @@ function App({logout, editUser}) {
   useEffect(() => {
 
 
-    window.ethereum.on('accountsChanged', function (accounts) {
+    if (window.ethereum) window.ethereum.on('accountsChanged', function (accounts) {
       user.currentAccount = accounts[0]
       setUser({ ...user })
 
@@ -202,7 +202,8 @@ function App({logout, editUser}) {
   }, [])
 
   useEffect(() => {
-    (async () => {
+    if (window.ethereum) {
+      (async () => {
       let chainId = web3js.utils.toHex(chains[currentChainIndex].id);
       let icebreakerAddress = chains[currentChainIndex].icebreakerAddress
 
@@ -228,6 +229,8 @@ function App({logout, editUser}) {
       }
 
     })()
+    }
+    
   }, [currentChainIndex])
 
   useEffect(() => {
@@ -250,10 +253,10 @@ function App({logout, editUser}) {
 
 
   if (!window.ethereum) {
-    alert('No wallet detected. You should install metamask or maybe other wallet')
-    return <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
+    
+    return (() => { alert('No wallet detected. You should install metamask or maybe other wallet'); return <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
       <a style={{ color: 'black', textDecoration: 'none' }} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a>
-    </div>
+    </div>})()
   }
   
   return (
