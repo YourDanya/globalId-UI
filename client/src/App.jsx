@@ -283,7 +283,7 @@ function App({logout, editUser}) {
                         <p>expired {new Date(challenge.timeout * 1000).toLocaleString()}</p>
                     }
                     <p>You risk: {displayPriceFromWei(challenge.challengerStakeAtRisk)}</p>
-                    {challenge.inspectorReward && <p>Inspector reward: {displayPriceFromWei(challenge.inspectorReward)}</p>}
+                    {web3js.utils.fromWei(challenge.inspectorReward) >= 0.001 && <p>Inspector reward: {displayPriceFromWei(challenge.inspectorReward)}</p>}
                     <p>Inspector: {allUsers.find(item => item.web3Address === challenge.inspector.toLowerCase())?.name} {challenge.inspector}</p>
 
                     <hr />
