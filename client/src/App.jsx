@@ -40,6 +40,7 @@ function App({logout, editUser}) {
   const currencies = ['MATIC', 'UAH', 'USD']
 
   let web3js = new Web3(window.ethereum)
+  const chainId = web3js.utils.toHex('80001')
   let icebreaker = new web3js.eth.Contract(icebreakerAbi, icebreakerAddress)
 
 
@@ -179,6 +180,10 @@ function App({logout, editUser}) {
         user.currentAccount = accounts[0]
         setUser({ ...user })
       }
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }],
+      });
 
     })()
 
