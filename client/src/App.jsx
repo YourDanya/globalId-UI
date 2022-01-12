@@ -21,9 +21,19 @@ import userApi from './api/user.api';
 import ChangeNameForm from './components/ChangeNameForm';
 
 function App({logout, editUser}) {
-  // const icebreakerAddress = '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7' // testnet
-  const icebreakerAddress = '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'; 
-
+  const chains = [
+    {
+      id: '137',
+      name: 'POLYGON_MAINNET',
+      icebreakerAddress: '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c'
+    },
+    {
+      id: '80001',
+      name: 'POLYGON_TESTNET',
+      icebreakerAddress: '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7'
+    }
+]
+  const [currentChainIndex, setCurrentChainIndex] = useState(0)
   const [user, setUser] = useState({
     challenges: [],
     inspections: [],
@@ -31,6 +41,7 @@ function App({logout, editUser}) {
     balance: 0,
     name: ''
   })
+  let [icebreaker, setIcebreaker] = useState({})
   const [allUsers, setAllUsers] = useState([])
   const [showCreateChallengeModal, setShowCreateChallengeModal] = useState(false)
   const [showChangeNameModal, setShowChangeNameModal] = useState(false)
@@ -40,9 +51,6 @@ function App({logout, editUser}) {
   const currencies = ['MATIC', 'UAH', 'USD']
 
   let web3js = new Web3(window.ethereum)
-  let chainId = '137'; 
-  chainId = web3js.utils.toHex(chainId);
-  let icebreaker = new web3js.eth.Contract(icebreakerAbi, icebreakerAddress)
 
 
   async function connectAccount() {
@@ -105,7 +113,7 @@ function App({logout, editUser}) {
         setAllUsers(allFetchedUsers)
       })()
     },
-    [],
+    [icebreaker],
   )
 
   function createChallenge({ challengerStakeAtRisk, description, inspectorAddress, timeoutAfterMilliseconds, inspectorReward }) {
@@ -164,6 +172,10 @@ function App({logout, editUser}) {
     console.log(response);
   }
 
+  async function switchChain(chainIndex) {
+    setCurrentChainIndex(chainIndex)
+  }
+
   async function changeName(newName) {
     const response = await userApi.postSingle('user-data', {name: newName})
     console.log(response);
@@ -175,18 +187,7 @@ function App({logout, editUser}) {
   }
 
   useEffect(() => {
-    (async () => {
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' })
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId }], 
-      });
-      if (accounts) {
-        user.currentAccount = accounts[0]
-        setUser({ ...user })
-      }
 
-    })()
 
     window.ethereum.on('accountsChanged', function (accounts) {
       user.currentAccount = accounts[0]
@@ -198,6 +199,31 @@ function App({logout, editUser}) {
 
   }, [])
 
+  useEffect(() => {
+    (async () => {
+      let chainId = web3js.utils.toHex(chains[currentChainIndex].id);
+      let icebreakerAddress = chains[currentChainIndex].icebreakerAddress
+
+      let currentIcebreaker = new web3js.eth.Contract(icebreakerAbi, icebreakerAddress)
+      setIcebreaker(currentIcebreaker)
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }],
+      });
+
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+      if (accounts) {
+        user.currentAccount = accounts[0]
+        setUser({ ...user })
+      }
+
+    })()
+  }, [currentChainIndex])
+
+  useEffect(() => {
+    console.log(icebreaker);
+  }, [icebreaker])
+
 
 
   let fetchDataInterval = useRef()
@@ -206,7 +232,7 @@ function App({logout, editUser}) {
     console.log('set fetch data interval');
     fetchDataInterval.current && clearInterval(fetchDataInterval.current)
     fetchDataInterval.current = setInterval(updateData, 1000)
-  }, [user.currentAccount])
+  }, [user.currentAccount, icebreaker])
 
   useEffect(() => {
     console.log(currencyIndex);
@@ -217,7 +243,10 @@ function App({logout, editUser}) {
 
   return (
     <div>
-      <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}><a href='https://quirky-jang-62bfee.netlify.app/' style={{color: 'black', textDecoration: 'none', marginRight: '30%'}} >Go to testnet</a><a style={{color: 'black', textDecoration: 'none'}} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a></div>
+      <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
+        <a style={{color: 'black', textDecoration: 'none'}} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a>
+        <button style={{position: 'absolute', top: '20px', right: '20px'}} onClick={() => switchChain(+!currentChainIndex)}>{currentChainIndex === 0 ? 'Go to testnet' : 'Go to mainnet'}</button>
+      </div>
       <button onClick={connectAccount}>
         Connect account
       </button>
