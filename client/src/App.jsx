@@ -51,6 +51,8 @@ function App({logout, editUser}) {
   let [maticPriceUAH, setMaticPriceUAH] = useState(0)
   const [currencyIndex, setCurrencyIndex] = useState(parseInt(localStorage.getItem('icebreaker-currency-index')) || 0)
   const currencies = ['MATIC', 'UAH', 'USD']
+  const [usernameToSearch, setUsernameToSearch] = useState('')
+  const [showSearch, setShowSearch] = useState(false)
 
   let web3js = new Web3(window.ethereum)
 
@@ -108,6 +110,7 @@ function App({logout, editUser}) {
         user.balanceUSD = Math.trunc(maticPriceUSD * user.balance * 1000) / 1000
 
         const allFetchedUsers = await getAllUsers()
+        console.log(allFetchedUsers)
         const userInDatabase = allFetchedUsers.find(item => item.web3Address === user.currentAccount)
         user.name = userInDatabase?.name
 
@@ -274,11 +277,26 @@ function App({logout, editUser}) {
         &&
         <div>
           <hr />
-          <div>connected as {user.name} {user.currentAccount} <button onClick={() => setShowChangeNameModal(true)}>Change name</button></div>
+            <div>
+              connected as <b>{user.name}</b> {user.currentAccount} 
+              <button onClick={() => setShowChangeNameModal(true)}>Change name</button>
+              
+                  <div style={{display: 'inline-block', marginLeft: '10px'}}>
+                    <span>     Search address by username: </span>
+
+                    <input type="text" onChange={(e) => setUsernameToSearch(e.target.value)} />
+                    <span>  {web3js.utils.toChecksumAddress(allUsers.find(item => item.name === usernameToSearch)?.web3Address)}</span>
+                  </div>
+            </div>
           <div>Your balance is {displayPriceFromEther(user.balance)}</div>
           <br />
-          <div style={{ textAlign: 'center' }}>
+          <div 
+            style={{ 
+              textAlign: 'center', 
+              position: 'relative'
+            }}>
             <button onClick={() => setShowCreateChallengeModal(!showCreateChallengeModal)}>Create your challenge</button>
+            
           </div>
 
           <br />
