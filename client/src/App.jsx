@@ -168,7 +168,7 @@ function App({logout, editUser}) {
   }
 
   async function loginWithWeb3(address) {
-    const message = 'Login with this address'
+    const message = 'Login to icebreaker app with this address'
     const signature = await web3js.eth.personal.sign(message, address)
     const response = await authApi.postSingle('login-with-web3', {message, address, signature})
     console.log(response);
