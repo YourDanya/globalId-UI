@@ -228,10 +228,12 @@ function App({logout, editUser}) {
       })
       } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask
-        if (error.data.code == 4902) {
+        if (error.data.code == 4902 || error.code == 4902) {
           alert(`You should add ${chains[currentChainIndex].name} to your wallet. Go to ${chains[currentChainIndex].source}`)
         }
       console.error(error);
+      alert(error.data.code)
+      alert(error.code)
     }
 
       const accounts = await window.ethereum.request({ method: 'eth_accounts' })
