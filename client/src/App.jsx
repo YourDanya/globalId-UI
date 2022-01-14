@@ -65,7 +65,7 @@ function App({logout, editUser}) {
       }]
     }).then(() => window.ethereum.request({
       method: 'eth_requestAccounts'
-    }))
+    })).catch(err => alert(err))
     const account = accounts[0]
     user.currentAccount = account
     setUser({ ...user })
@@ -232,6 +232,10 @@ function App({logout, editUser}) {
       }
 
     })()
+    } else {
+      window.addEventListener('ethereum#initialized', , {
+        once: true,
+      });
     }
     
   }, [currentChainIndex])
