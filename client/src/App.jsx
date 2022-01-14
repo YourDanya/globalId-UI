@@ -58,21 +58,23 @@ function App({logout, editUser}) {
 
 
   async function connectAccount() {
-    const accounts = await window.ethereum.request({
+    await window.ethereum.request({
       method: "wallet_requestPermissions",
       params: [{
         eth_accounts: {}
       }]
-    }).then(async () => await window.ethereum.request({
+    }).catch()
+    // then(async () => await window.ethereum.request({
+    //   method: 'eth_requestAccounts'
+    // })).catch(async err => {
+    //   //When using mobile
+    //   if (err.data.code == 32601) {
+    //     return 
+    //   }
+    // }).catch((err) => alert(JSON.stringify(err)))
+    const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts'
-    })).catch(async err => {
-      //When using mobile
-      if (err.data.code == 32601) {
-        return await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        })
-      }
-    }).catch((err) => alert(JSON.stringify(err)))
+    }).catch(err => alert(JSON.stringify(err)))
     const account = accounts[0]
     user.currentAccount = account
     setUser({ ...user })
