@@ -74,7 +74,7 @@ function App({logout, editUser}) {
     // }).catch((err) => alert(JSON.stringify(err)))
     const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts'
-    }).catch(err => alert(JSON.stringify(err)))
+    }).then(res => alert(JSON.stringify(res))).catch(err => alert(JSON.stringify(err)))
     const account = accounts[0]
     user.currentAccount = account
     setUser({ ...user })
