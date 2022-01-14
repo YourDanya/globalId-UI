@@ -23,13 +23,31 @@ import ChangeNameForm from './components/ChangeNameForm';
 function App({logout, editUser}) {
   const chains = [
     {
-      id: '137',
+      id: '0x89',
+      chainId: '',
+      nativeCurrency: {
+        name: 'MATIC token',
+        symbol: 'MATIC',
+        decimals: 18
+      },
+      chainName: 'Polygon Mainnet',
+      rpcUrls: ['https://polygon-rpc.com/'],
+      blockExplorerUrls: ['https://polygonscan.com/'],
       name: 'POLYGON MAINNET',
       icebreakerAddress: '0xD00B0A1bC8E13cE848F1e2ff0f6Ff2027610d09c',
       source: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
     },
     {
       id: '80001',
+      chainId: '0x13881',
+      nativeCurrency: {
+        name: 'MATIC token',
+        symbol: 'MATIC',
+        decimals: 18
+      },
+      chainName: 'Polygon Testnet',
+      rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
+      blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
       name: 'POLYGON TESTNET (MUMBAI)',
       icebreakerAddress: '0xeECF94Fc94ad65b8f7b1123F3388A9747BC596c7',
       source: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
@@ -55,7 +73,6 @@ function App({logout, editUser}) {
   const [showSearch, setShowSearch] = useState(false)
 
   let web3js = new Web3(window.ethereum)
-
 
   async function connectAccount() {
     await window.ethereum.request({
@@ -229,7 +246,10 @@ function App({logout, editUser}) {
       } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask
         if (error.data.originalError.code == 4902 ) {
-          alert(`You should add ${chains[currentChainIndex].name} to your wallet. Go to ${chains[currentChainIndex].source}`)
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [chains[currentChainIndex]]
+          })
         }
     }
 
