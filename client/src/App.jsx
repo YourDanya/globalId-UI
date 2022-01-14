@@ -63,7 +63,7 @@ function App({logout, editUser}) {
       params: [{
         eth_accounts: {}
       }]
-    }).catch()
+    }).catch(err => alert(JSON.stringify(err)))
     // then(async () => await window.ethereum.request({
     //   method: 'eth_requestAccounts'
     // })).catch(async err => {
