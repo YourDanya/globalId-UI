@@ -247,7 +247,7 @@ function App({logout, editUser}) {
       // This error code indicates that the chain has not been added to MetaMask
         if (error.data.originalError.code == 4902 ) {
           const {chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls} = chains[currentChainIndex]
-          const params = { chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls }
+          const params = [{ chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls }]
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params
