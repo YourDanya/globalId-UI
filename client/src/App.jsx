@@ -65,7 +65,14 @@ function App({logout, editUser}) {
       }]
     }).then(async () => await window.ethereum.request({
       method: 'eth_requestAccounts'
-    })).catch(err => alert(JSON.stringify(err)))
+    })).catch(async err => {
+      //When using mobile
+      if (err.data.code == 32601) {
+        return await window.ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+      }
+    }).catch((err) => alert(JSON.stringify(err)))
     const account = accounts[0]
     user.currentAccount = account
     setUser({ ...user })
