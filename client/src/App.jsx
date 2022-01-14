@@ -23,8 +23,8 @@ import ChangeNameForm from './components/ChangeNameForm';
 function App({logout, editUser}) {
   const chains = [
     {
-      id: '0x89',
-      chainId: '',
+      id: '137',
+      chainId: '0x89',
       nativeCurrency: {
         name: 'MATIC token',
         symbol: 'MATIC',
@@ -246,11 +246,12 @@ function App({logout, editUser}) {
       } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask
         if (error.data.originalError.code == 4902 ) {
-          alert('no such chain!')
+          const {chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls} = chains[currentChainIndex]
+          const params = { chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls }
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
-            params: [chains[currentChainIndex]]
-          }).catch(err => alert(JSON.stringify(err)))
+            params
+          })
         }
     }
 
