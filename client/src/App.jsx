@@ -234,6 +234,7 @@ function App({logout, editUser}) {
       console.error(error);
       alert(error.data.code)
       alert(error.code)
+      alert(JSON.stringify(error))
     }
 
       const accounts = await window.ethereum.request({ method: 'eth_accounts' })
