@@ -251,7 +251,7 @@ function App({logout, editUser}) {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params
-          })
+          }).catch(err => alert(JSON.stringify(err)))
         }
     }
 
