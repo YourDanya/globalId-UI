@@ -53,7 +53,7 @@ function App({logout, editUser}) {
       source: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
     }
 ]
-  const [currentChainIndex, setCurrentChainIndex] = useState(0)
+  const [currentChainIndex, setCurrentChainIndex] = useState(parseInt(localStorage.getItem('icebreaker-chain-index')) || 0)
   const [user, setUser] = useState({
     challenges: [],
     inspections: [],
@@ -204,6 +204,7 @@ function App({logout, editUser}) {
   }
 
   async function switchChain(chainIndex) {
+    localStorage.setItem('icebreaker-chain-index', chainIndex)
     setCurrentChainIndex(chainIndex)
   }
 
@@ -244,8 +245,9 @@ function App({logout, editUser}) {
         params: [{ chainId }],
       })
       } catch (error) {
+        console.log(JSON.stringify(error));
       // This error code indicates that the chain has not been added to MetaMask
-        if (error.data.originalError.code == 4902 ) {
+        if (error.data?.originalError?.code == 4902 || error.code == 4902 ) {
           const {chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls} = chains[currentChainIndex]
           const params = [{ chainId, chainName, nativeCurrency, rpcUrls, blockExplorerUrls }]
           await window.ethereum.request({
