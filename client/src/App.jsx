@@ -246,10 +246,11 @@ function App({logout, editUser}) {
       } catch (error) {
       // This error code indicates that the chain has not been added to MetaMask
         if (error.data.originalError.code == 4902 ) {
+          alert('no such chain!')
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [chains[currentChainIndex]]
-          })
+          }).catch(err => alert(JSON.stringify(err)))
         }
     }
 
