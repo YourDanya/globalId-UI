@@ -63,7 +63,7 @@ function App({logout, editUser}) {
       params: [{
         eth_accounts: {}
       }]
-    }).catch(err => alert(JSON.stringify(err)))
+    }).catch(err => console.log(JSON.stringify(err)))
     // then(async () => await window.ethereum.request({
     //   method: 'eth_requestAccounts'
     // })).catch(async err => {
@@ -74,7 +74,7 @@ function App({logout, editUser}) {
     // }).catch((err) => alert(JSON.stringify(err)))
     const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts'
-    }).then(res => alert(JSON.stringify(res))).catch(err => alert(JSON.stringify(err)))
+    }).then(res => console.log(JSON.stringify(res))).catch(err => alert(JSON.stringify(err)))
     const account = accounts[0]
     user.currentAccount = account
     setUser({ ...user })
@@ -232,6 +232,7 @@ function App({logout, editUser}) {
           alert(`You should add ${chains[currentChainIndex].name} to your wallet. Go to ${chains[currentChainIndex].source}`)
         }
       console.error(error);
+      alert(JSON.stringify(error))
     }
 
       const accounts = await window.ethereum.request({ method: 'eth_accounts' })
