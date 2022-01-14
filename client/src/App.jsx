@@ -63,7 +63,7 @@ function App({logout, editUser}) {
       params: [{
         eth_accounts: {}
       }]
-    }).then(() => window.ethereum.request({
+    }).then(async () => await window.ethereum.request({
       method: 'eth_requestAccounts'
     })).catch(err => alert(err))
     const account = accounts[0]
@@ -232,11 +232,7 @@ function App({logout, editUser}) {
       }
 
     })()
-    } else {
-      window.addEventListener('ethereum#initialized', , {
-        once: true,
-      });
-    }
+  }
     
   }, [currentChainIndex])
 
