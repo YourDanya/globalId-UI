@@ -102,6 +102,11 @@ function App({logout, editUser}) {
   const updateData = useCallback(
     () => {
       (async () => {
+        const accounts = await window.ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+        const account = accounts[0]
+        user.currentAccount = account
         
         if (!user.currentAccount) return
 
@@ -221,12 +226,12 @@ function App({logout, editUser}) {
   useEffect(() => {
 
 
-    if (window.ethereum) window.ethereum.on('accountsChanged', function (accounts) {
+    if (window.ethereum) window.ethereum.on('accountsChanged', async function (accounts) {
+      await authApi.postSingle('logout')
       user.currentAccount = accounts[0]
       setUser({ ...user })
 
       if (accounts.length > 0) loginWithWeb3(user.currentAccount)
-      else logout()
     });
 
   }, [])
@@ -280,7 +285,7 @@ function App({logout, editUser}) {
     console.log('set fetch data interval');
     fetchDataInterval.current && clearInterval(fetchDataInterval.current)
     fetchDataInterval.current = setInterval(updateData, 1000)
-  }, [user.currentAccount, icebreaker])
+  }, [icebreaker])
 
   useEffect(() => {
     console.log(currencyIndex);
