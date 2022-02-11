@@ -7,7 +7,6 @@ import WithSpinner from '../../../layout/WithSpinner/WithSpinner'
 function GoogleLoginButton({handleToken, setLoading}) {
 	const handleClick = () => setLoading({isLoading: true, success: false, message: ''})
 	const handleResponse = (response) => {
-		console.log(response)
 		handleToken(response.tokenId)
 	}
 	const handleFailure = (error) => {

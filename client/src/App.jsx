@@ -149,7 +149,6 @@ function App({
                     <p>challenger: {allUsers.find(item => item.walletAddress === challenge.challenger.toLowerCase())?.name} {challenge.challenger}</p>
 
                     <button onClick={() => {
-                      console.log(challenge);
                       if (challenge.inspectorReward > 0) {
                         confirmAlert({
                           title: `Your friend gives you a reward for participation ${displayPriceFromWei(challenge.inspectorReward, maticToDisplayedCurrency, displayedCurrency)}`,

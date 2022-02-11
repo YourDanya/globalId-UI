@@ -43,7 +43,6 @@ import { claimChallengeFailure, claimChallengeSuccess, createChallenge } from '.
     const maticToDisplayedCurrency = prices.find(price => price.from == 'MATIC' && price.to == displayedCurrency).value
 
     const challenge = payload
-    console.log(challenge);
     if (challenge.inspectorReward > 0) {
       confirmAlert({
         title: `Your friend gives you a reward for participation ${displayPriceFromWei(challenge.inspectorReward, maticToDisplayedCurrency, displayedCurrency)}`,

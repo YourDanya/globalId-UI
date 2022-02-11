@@ -32,7 +32,6 @@ export function* connectWalletMetamaskSaga() {
   })} catch (err) {console.log(err)}
       
   const nextAccount = accounts[0]
-  console.log(accounts)
   yield put(setWalletAddress(nextAccount))
   yield call(loginWithWeb3Saga)
 }
@@ -50,8 +49,6 @@ export function* setCurrentChainSaga({payload}) {
   localStorage.setItem('icebreaker-chain-id', id)
 
   //save to redux state
-  console.log(chain)
-  
   yield put(setCurrentChainToState(chain))
 
   //switch chain with metamask

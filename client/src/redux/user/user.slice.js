@@ -63,7 +63,6 @@ export const {
 
 export const selectUser = state => state.user
 export const selectWalletAddress = createSelector([selectUser], user => {
-    console.log(user)
     return user.walletAddress
 })
 
