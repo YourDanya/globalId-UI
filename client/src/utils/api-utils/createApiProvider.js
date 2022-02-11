@@ -11,56 +11,55 @@ const DEFAULT_BASE_URL = process.env.NODE_ENV === 'production' ? process.env.REA
 
 
 
-const createApiProvider = (BASE_URL = DEFAULT_BASE_URL) => ({
-	getAll: async (resource, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+const createApiProvider = ({baseUrl = DEFAULT_BASE_URL, url}) => ({
+	getAll: async ({ withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.get(`${BASE_URL}/${resource}`, { withCredentials, ...otherSettings })
+			.get(`${baseUrl}/${url}`, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	getSingle: async (resource, id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+	getSingle: async (id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.get(`${BASE_URL}/${resource}/${id}`, { withCredentials, ...otherSettings })
+			.get(`${baseUrl}/${url}/${id}`, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	post: async (resource, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+	post: async (model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.post(`${BASE_URL}/${resource}`, model, { withCredentials, ...otherSettings })
+			.post(`${baseUrl}/${url}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	// postSingle: async (resource, id, model) => {
-	postSingle: async (resource, id, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+	// postSingle: async (id, model) => {
+	postSingle: async (id, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.post(`${BASE_URL}/${resource}/${id}`, model, { withCredentials, ...otherSettings })
+			.post(`${baseUrl}/${url}/${id}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	put: async (resource, model, {withCredentials =  true, ...otherSettings} = {withCredentials: true}) => {
+	put: async (model, {withCredentials =  true, ...otherSettings} = {withCredentials: true}) => {
 		return await axios
-			.put(`${BASE_URL}/${resource}`, model, {withCredentials, ...otherSettings})
+			.put(`${baseUrl}/${url}`, model, {withCredentials, ...otherSettings})
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	patch: async (resource, model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+	patch: async (model, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.patch(`${BASE_URL}/${resource}`, model, { withCredentials, ...otherSettings })
+			.patch(`${baseUrl}/${url}`, model, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 
-	remove: async (resource, id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
+	remove: async (id, { withCredentials = true, ...otherSettings } = {withCredentials: true}) => {
 		return await axios
-			.delete(`${BASE_URL}/${resource}`, id, { withCredentials, ...otherSettings })
+			.delete(`${baseUrl}/${url}`, id, { withCredentials, ...otherSettings })
 			.then(handleResponse)
 			.catch(handleError);
 	},
 })
-
 export default createApiProvider

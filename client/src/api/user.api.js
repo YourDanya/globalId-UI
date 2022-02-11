@@ -1,14 +1,8 @@
-import ApiCore from "../utils/api-utils/ApiCore";
+
+import createApiProvider from "../utils/api-utils/createApiProvider";
 import baseUrl from './baseUrl'
 
-const userApi = new ApiCore({
-	getAll: true,
-	getSingle: true,
-	postSingle: true,
-	post: true,
-	put: false,
-	patch: true,
-	delete: false,
+const userApi = createApiProvider({
 	url: `users`,
 	baseUrl
 });

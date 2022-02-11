@@ -5,7 +5,7 @@ import { selectModifyProfileLoading } from '../redux/loading.slice'
 import { modifyProfile } from '../redux/profile/profile.slice'
 import { selectUser } from '../redux/user/user.slice'
 
-function ChangeNameForm({user, loading, changeName}) {
+function ChangeNameForm({loading, changeName}) {
 	return (
 		<div>
 			<form onSubmit={ async (e) => {
@@ -28,7 +28,6 @@ function ChangeNameForm({user, loading, changeName}) {
 }
 
 const mapStateToProps = (state) => ({
-	user: selectUser(state),
 	loading: selectModifyProfileLoading(state)
 })
 

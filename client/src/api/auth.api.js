@@ -1,8 +1,8 @@
-import ApiCore from "../utils/api-utils/ApiCore";
+
+import createApiProvider from "../utils/api-utils/createApiProvider";
 import baseUrl from './baseUrl'
 
-const authApi = new ApiCore({
-	postSingle: true,
+const authApi = createApiProvider({
 	url: `auth`,
 	baseUrl
 });

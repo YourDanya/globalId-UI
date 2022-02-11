@@ -54,18 +54,8 @@ const userSlice = createSlice({
 
 export default userSlice.reducer
 export const {
-    setUserData,
-    getUserData,
-    loginWithNameAndPassword,
-    loginWithGoogle,
-    createUserWithNameAndPassword,
     logout,
-    updateUserData,
-    updateUserPassword,
-    forgetUserPassword,
-    resetUserPassword,
     setWalletAddress,
-
     fetchUser,
     setUser,
     loginWithWeb3,

@@ -98,7 +98,6 @@ function CreateChallengeForm({ user, displayedCurrency, prices, createChallenge,
 
 const mapStateToProps = createStructuredSelector({
 	user: selectUser,
-
 	prices: selectPrices,
 	displayedCurrency: selectDisplayedCurrency
 })

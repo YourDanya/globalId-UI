@@ -38,6 +38,7 @@ export function* connectWalletMetamaskSaga() {
 }
 
 
+
 export function* setCurrentChainSaga({payload}) {
   const web3 = new Web3(window.ethereum)
   const id = payload
@@ -55,99 +56,10 @@ export function* setCurrentChainSaga({payload}) {
 
   //switch chain with metamask
   try {
-    let res = yield window.ethereum.request({
+    yield window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId }],
     })
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(1)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(res)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
-    console.log(window.ethereum.networkVersion)
   } catch (error) {
     // This error code indicates that the chain has not been added to MetaMask
     if (error.data?.originalError?.code == 4902 || error.code == 4902) {
@@ -175,6 +87,9 @@ export function* setCurrentChainSaga({payload}) {
     yield put(setWalletAddress(walletAddress))
   }
 }
+
+
+
 function* changeAccountMetamaskSaga({payload}) {
   const newAccount = payload
         yield authApi.postSingle('logout')

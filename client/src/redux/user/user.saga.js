@@ -6,96 +6,27 @@ import {
 } from '@redux-saga/core/effects'
 import Web3 from 'web3'
 import authApi from '../../api/auth.api'
-import userApi from '../../api/user.api'
 import withLoading from '../../utils/redux-utils/withLoading.saga'
 import {
-    setAuthLoading,
     setFetchUserDataLoading,
-    setAuthLoadingSilently,
-    setUpdateUserDataLoading,
-    setUpdateUserPasswordLoading,
-    setForgetUserPasswordLoading, setResetUserPasswordLoading, setModifyProfileLoading,
 } from '../loading.slice'
 import { selectPrices } from '../currency/currency.slice'
 import { selectAllUsers } from '../users/users.slice'
 import { selectIcebreaker } from '../wallet/wallet.slice'
 import {
-    createUserWithNameAndPassword,
-    getUserData,
-    loginWithNameAndPassword,
-    loginWithGoogle,
     logout,
-    setUserData,
-    updateUserData,
-    updateUserPassword,
-    forgetUserPassword,
-    resetUserPassword,
     fetchUser,
     selectWalletAddress,
     setUser,
-    modifyUser,
     loginWithWeb3
 } from './user.slice'
 
 
-export const getUserDataSaga = withLoading(function* () {
-    const userData = yield userApi.getSingle('user-data')
-    yield put(setUserData(userData))
 
-    return userData.message
-}, setFetchUserDataLoading, setAuthLoadingSilently)
 
-const handleAuth = withLoading(function* (auth) {
-    const authMessage = yield call(auth)
-    yield call(getUserDataSaga)
 
-    return authMessage
-}, setAuthLoading)
 
-function* loginWithGoogleSaga({payload}) {
-    yield call(handleAuth, async () => await authApi.postSingle('login-with-google', payload))
-}
 
-function* loginWithNameAndPasswordSaga({payload}) {
-    yield call(handleAuth, async () => await authApi.postSingle('login', payload))
-}
-
-function* createUserWithNameAndPasswordSaga({payload}) {
-    yield call(handleAuth, async () => await authApi.postSingle('signup', payload))
-}
-
-const logoutSaga = withLoading(function* () {
-    const authMessage = yield authApi.postSingle('logout')
-    yield put(setUserData(null))
-    yield put(setAuthLoading({success: false, isLoading: false, message: ''}))
-
-    return authMessage
-}, setFetchUserDataLoading)
-
-const updateUserDataSaga = withLoading(function* ({payload}) {
-    const message = yield userApi.postSingle('user-data', payload)
-    yield call(getUserDataSaga)
-    return message
-}, setUpdateUserDataLoading)
-
-const updateUserPasswordSaga= withLoading( function* ({payload}){
-    const message= yield userApi.postSingle('update-password', payload)
-    yield call(getUserDataSaga)
-    return message
-}, setUpdateUserPasswordLoading)
-
-const forgetUserPasswordSaga= withLoading( function* ({payload}){
-    const message= yield userApi.postSingle('forgot-password', payload)
-    yield call(getUserDataSaga)
-    return message
-}, setForgetUserPasswordLoading)
-
-const resetUserPasswordSaga= withLoading( function* ({payload}){
-    console.log('inside reset pass saga')
-    const message= yield userApi.postSingle(`reset-password/${payload.token}`, payload)
-    yield call(getUserDataSaga)
-    return message
-}, setResetUserPasswordLoading)
 
 export const fetchUserSaga = function* () {
     const currentWalletAddress = yield select(selectWalletAddress)
@@ -150,7 +81,16 @@ export const fetchUserSaga = function* () {
     return currentUser
 }
 
-  export function* loginWithWeb3Saga() {
+
+
+const logoutSaga = withLoading(function* () {
+    const authMessage = yield authApi.postSingle('logout')
+    return authMessage
+}, setFetchUserDataLoading)
+
+  
+
+export function* loginWithWeb3Saga() {
     yield call(logoutSaga)
     const web3 = new Web3(window.ethereum)
     const message = 'Login to icebreaker app with this address'
@@ -158,21 +98,12 @@ export const fetchUserSaga = function* () {
     const signature = yield web3.eth.personal.sign(message, address)
     const response = yield authApi.postSingle('login-with-web3', { message, address, signature })
     console.log(response);
-  }
+}
+
 
 
 export default function* userSaga() {
-    yield takeLatest(loginWithGoogle, loginWithGoogleSaga)
-    yield takeLatest(loginWithNameAndPassword, loginWithNameAndPasswordSaga)
-    yield takeLatest(createUserWithNameAndPassword, createUserWithNameAndPasswordSaga)
     yield takeLatest(logout, logoutSaga)
-    yield takeLatest(getUserData, getUserDataSaga)
-    yield takeLatest(updateUserData, updateUserDataSaga)
-    yield takeLatest(updateUserPassword, updateUserPasswordSaga)
-    yield takeLatest(forgetUserPassword, forgetUserPasswordSaga)
-    yield takeLatest(resetUserPassword, resetUserPasswordSaga)
-
-
     yield takeLatest(fetchUser, fetchUserSaga)
     yield takeLatest(loginWithWeb3, loginWithWeb3Saga)    
 }

@@ -1,14 +1,7 @@
-import ApiCore from "../utils/api-utils/ApiCore";
+import createApiProvider from "../utils/api-utils/createApiProvider";
 import baseUrl from './baseUrl'
 
-const userProfileApi = new ApiCore({
-  getAll: true,
-  getSingle: true,
-	postSingle: true,
-  post: true,
-  put: false,
-  patch: true,
-  delete: false,
+const userProfileApi = createApiProvider({
   url: `users/user-data/profile`,
   baseUrl
 });

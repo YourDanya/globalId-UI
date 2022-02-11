@@ -35,13 +35,11 @@ const Navbar = ({  connectAccount, setCurrentChain, currentChain }) => {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: selectAuthLoading(state).success,
   currentChain: selectCurrentChain(state),
   
 });
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout()),
   setCurrentChain: (id) => dispatch(setCurrentChain(id)),
   connectAccount: () => dispatch(connectWalletMetamask())
 })

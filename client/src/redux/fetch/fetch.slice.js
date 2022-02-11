@@ -3,7 +3,6 @@ import { createSelector } from 'reselect'
 
 
 const initialState = {
-  // interval: null
 }
 
 const fetchSlice = createSlice({
@@ -20,4 +19,3 @@ export const {
 } = fetchSlice.actions
 
 export const selectFetch = state => state.fetch
-// export const selectFetchInterval = createSelector(selectFetch, (fetch) => fetch.interval)

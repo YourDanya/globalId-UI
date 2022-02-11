@@ -5,19 +5,15 @@
 /* global BigInt */
 
 import './App.css';
-import icebreakerAbi from './icebreakerAbi.json'
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Web3 from "web3";
-import axios from 'axios'
 import Modal from '@material-ui/core/Modal';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
 import CreateChallengeForm from './components/CreateChallengeForm';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import authApi from './api/auth.api';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { loginWithWeb3, logout, selectUser, setWalletAddress } from './redux/user/user.slice';
-import userApi from './api/user.api';
 import ChangeNameForm from './components/ChangeNameForm';
 import Navbar from './components/layout/Navbar/Navbar';
 import { displayPriceFromEther, displayPriceFromWei } from './utils/convertation-utils/currency.utils';
@@ -27,7 +23,17 @@ import { changeAccountMetamask, selectIcebreaker, setCurrentChain } from './redu
 import { fetchEverything } from './redux/fetch/fetch.slice';
 import { selectDisplayedCurrency, selectMaticToDisplayedCurrency, switchDisplayedCurrency } from './redux/currency/currency.slice';
 
-function App({user, allUsers, icebreaker, displayedCurrency, maticToDisplayedCurrency, fetchEverything, loginWithWeb3, changeAccountMetamask, setWalletAddress, setCurrentChain, logout, switchDisplayedCurrency}) {
+function App({
+  user,
+  allUsers,
+  icebreaker, 
+  displayedCurrency, 
+  maticToDisplayedCurrency, 
+  fetchEverything, 
+  changeAccountMetamask,  
+  setCurrentChain, 
+  switchDisplayedCurrency
+}) {
 
   const [showCreateChallengeModal, setShowCreateChallengeModal] = useState(false)
   const [showChangeNameModal, setShowChangeNameModal] = useState(false)
@@ -205,9 +211,6 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-  setWalletAddress: () => dispatch(setWalletAddress()),
-  loginWithWeb3: () => dispatch(loginWithWeb3()),
   setCurrentChain: (id) => dispatch(setCurrentChain(id)),
   fetchEverything: () => dispatch(fetchEverything()),
   switchDisplayedCurrency: () => dispatch(switchDisplayedCurrency()),

@@ -23,4 +23,3 @@ export const {
 } = gameActionsSlice.actions
 
 export const selectGameActions = state => state.gameActions
-// export const selectGameActionsData = createSelector(selectGameActions, (gameActions) => gameActions.data)
