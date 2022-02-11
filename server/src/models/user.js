@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config({ path: './src/.env' })
 
 const userSchema = mongoose.Schema({
-  web3Address: String,
+  walletAddress: String,
   name: {
     type: String,
     required: [true, "Name is required"],
@@ -29,13 +29,6 @@ const userSchema = mongoose.Schema({
   active: {
     type: Boolean,
     default: false,
-  },
-  data: {
-    type: Object,
-    default: {
-      clicks: Number,
-      loses: Number
-    }
   },
   passwordResetToken: {
     type: String

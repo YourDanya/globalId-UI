@@ -4,60 +4,46 @@ import { connect } from 'react-redux';
 import { logout } from '../../../redux/user/user.slice';
 import { selectAuthLoading } from '../../../redux/loading.slice';
 import styles from './Navbar.module.sass'
+import { connectWalletMetamask, selectCurrentChain, setCurrentChain } from '../../../redux/wallet/wallet.slice';
 
 
-const Navbar = ({ isAuthenticated, logout }) => {
-  const authLinks = (
-    <ul>
-      <li>
-        <Link to='/dashboard'>
-          <span className={styles.hide_if_small}>Dashboard</span>
-        </Link>
-      </li>
-      <li>
-        <Link to='/profile-settings'>
-          ⚙️
-        </Link>
-      </li>
-      {
-        isAuthenticated ? 
-          <li>
-        <Link to='/' onClick={logout}>Logout</Link>
-      </li> :
-      ''
-      }
+const Navbar = ({  connectAccount, setCurrentChain, currentChain }) => {
+  return <div style={{ textAlign: 'right', paddingRight: '30%', fontSize: '20px' }}>
+
+        {/* CONNECT ACCOUNT */}
+        <button onClick={connectAccount}>
+          Connect account
+        </button>
+
+        {/* GO TO DOCS */}
+        <a style={{color: 'black', textDecoration: 'none'}} href='https://icebreaker.gitbook.io/icebreaker/'>Читати пояснення</a>
+
+        {/* SWITCH CHAIN */}
+        <button 
+          style={{position: 'absolute', top: '20px', right: '20px'}} 
+          onClick={() => {
+            const nextChainId = (currentChain.id == 137 && 80001) || (currentChain.id == 80001 && 137)
+            setCurrentChain(nextChainId)
+          }
+        }>
+          {(currentChain.id == 137 && 'Go to testnet') || (currentChain.id == 80001 && 'Go to mainnet')}
+        </button>
+
+   </div>
       
-    </ul>
-  );
-
-  const guestLinks = (
-    <ul>
-      <li>
-        <Link to='auth'>Login</Link>
-      </li>
-    </ul>
-  );
-
-  return (
-    <nav className={styles.navbar}>
-      <h1>
-        <Link to='/'>
-           MERN Boilerplate
-        </Link>
-      </h1>
-        <>{isAuthenticated ? authLinks : guestLinks}</>
-      )
-    </nav>
-  );
 };
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: selectAuthLoading(state).success
+  isAuthenticated: selectAuthLoading(state).success,
+  currentChain: selectCurrentChain(state),
+  
 });
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
+  setCurrentChain: (id) => dispatch(setCurrentChain(id)),
+  connectAccount: () => dispatch(connectWalletMetamask())
 })
 
 export default connect(

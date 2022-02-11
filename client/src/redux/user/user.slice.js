@@ -4,7 +4,11 @@ import userApi from '../../api/user.api'
 import authApi from '../../api/auth.api'
 
 const initialState = {
-    data: null
+    challenges: [],
+    inspections: [],
+    walletAddress: '',
+    balance: 0,
+    name: ''
 }
 
 const userSlice = createSlice({
@@ -22,6 +26,7 @@ const userSlice = createSlice({
         },
         createUserWithNameAndPassword() {
         },
+        loginWithWeb3() {},
         logout() {
         },
         updateUserData() {
@@ -31,6 +36,18 @@ const userSlice = createSlice({
         forgetUserPassword(){
         },
         resetUserPassword(){
+        },
+        
+
+        setWalletAddress(state, {payload}) {
+            state.walletAddress = payload
+        },
+        
+        fetchUser() {},
+        setUser(state, {payload}) {
+            for (let property in payload) {
+                state[property] = payload[property]
+            }
         }
     }
 })
@@ -46,12 +63,17 @@ export const {
     updateUserData,
     updateUserPassword,
     forgetUserPassword,
-    resetUserPassword
+    resetUserPassword,
+    setWalletAddress,
+
+    fetchUser,
+    setUser,
+    loginWithWeb3,
 } = userSlice.actions
 
 export const selectUser = state => state.user
-export const selectUserData = createSelector([selectUser], user => {
+export const selectWalletAddress = createSelector([selectUser], user => {
     console.log(user)
-    return user.data
+    return user.walletAddress
 })
 

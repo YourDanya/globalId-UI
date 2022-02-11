@@ -1,17 +1,17 @@
 
 import React, { useState } from 'react'
-import { Tooltip } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { selectModifyProfileLoading } from '../redux/loading.slice'
+import { modifyProfile } from '../redux/profile/profile.slice'
+import { selectUser } from '../redux/user/user.slice'
 
-function ChangeNameForm({changeName, user}) {
-	const [message, setMessage] = useState('')
+function ChangeNameForm({user, loading, changeName}) {
 	return (
 		<div>
 			<form onSubmit={ async (e) => {
 				e.preventDefault()
 				const newName = e.target.newName.value
-				await changeName(newName)
-					.then(res => setMessage(res))
-					.catch(err => setMessage(err.message))
+				changeName(newName)
 			}} className='change-name-form'>
 				<p>Change username</p>
 				<br />
@@ -20,11 +20,20 @@ function ChangeNameForm({changeName, user}) {
 
 
 				<div>
-					{message}
+					{loading.message}
 				</div>
 			</form>
 		</div>
 	)
 }
 
-export default ChangeNameForm
+const mapStateToProps = (state) => ({
+	user: selectUser(state),
+	loading: selectModifyProfileLoading(state)
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	changeName: (name) => dispatch(modifyProfile({name}))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeNameForm)

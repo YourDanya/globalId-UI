@@ -1,69 +1,76 @@
+
+
 import axios from 'axios'
 import React, { useState } from 'react'
+import { createChallenge } from '../redux/gameActions/gameActions.slice'
+import { selectDisplayedCurrency, selectPrices, switchDisplayedCurrency } from '../redux/currency/currency.slice'
+import { selectUser } from '../redux/user/user.slice'
+import { toMilliseconds } from '../utils/convertation-utils/date.utils'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 
-function CreateChallengeForm({ user, createChallenge }) {
-	
+function CreateChallengeForm({ user, displayedCurrency, prices, createChallenge, switchDisplayedCurrency }) {
+
 	const [error, setError] = useState('')
-	const [currencyIndex, setCurrencyIndex] = useState(0)
-	const currencies = ['MATIC', 'UAH', 'USD']
-	function toMilliseconds({months, days, hours, minutes}) {
-		return  months * 2592000000 + days * 86400000 + hours * 3600000 + minutes * 60000
+
+	const onSubmit = (e) => {
+		e.preventDefault()
+
+		//stakes
+		const displayedCurrencyToToken = (() => {
+			if (displayedCurrency == 'MATIC') return 1
+			return prices.find(price => price.from == 'MATIC' && price.to == displayedCurrency).value
+		})()
+
+		let challengerStakeAtRisk = Math.trunc((e.target.challengerStakeAtRisk.value / displayedCurrencyToToken) * 1000) / 1000
+		if (challengerStakeAtRisk >= user.balance) {
+			setError('Not enough money')
+			return
+		}
+		let inspectorReward = Math.trunc(((e.target.inspectorReward.value || 0) / displayedCurrencyToToken) * 1000) / 1000
+		if (challengerStakeAtRisk < inspectorReward) {
+			setError('Inspector reward should be less or equal than whole stake')
+			return
+		}
+
+		//--
+		let inspectorAddress = e.target.inspectorAddress.value
+
+		//--
+		let description = e.target.description.value
+
+		//challenge timeout
+		let timeoutAfterMilliseconds = toMilliseconds({
+			months: parseInt(e.target.timeoutMonths.value),
+			days: parseInt(e.target.timeoutDays.value),
+			hours: parseInt(e.target.timeoutHours.value),
+			minutes: parseInt(e.target.timeoutMinutes.value),
+		})
+
+		//--
+		const newChallenge = {
+			timeoutAfterMilliseconds,
+			challengerStakeAtRisk,
+			inspectorAddress,
+			description,
+			inspectorReward
+		}
+
+		createChallenge(newChallenge)
+
+
+		console.log('New challenge created:')
+		console.log(newChallenge);
 	}
-	function changeCurrency() {
-		const nextCurrencyIndex = currencyIndex < 2 ? currencyIndex + 1 : 0
-		setCurrencyIndex(nextCurrencyIndex)
-	}
+
+
 	return (
-		<form onSubmit={async (e) => {
-			e.preventDefault()
-			console.log(e.target.elements);
-			let timeoutAfterMilliseconds = toMilliseconds({
-				months:  parseInt(e.target.timeoutMonths.value),
-				days: parseInt(e.target.timeoutDays.value),
-				hours: parseInt(e.target.timeoutHours.value),
-				minutes: parseInt(e.target.timeoutMinutes.value),
-			})
-			let maticPrice
-			const USDToMatic = (await axios.get('https://api.coinbase.com/v2/prices/MATIC-USD/spot')).data.data.amount
-			const UAHToUSD = (await axios.get('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')).data.find(item => item.ccy == 'USD').sale
-			console.log(USDToMatic);
-			console.log(UAHToUSD);
-			switch (currencies[currencyIndex]) {
-				case 'UAH': maticPrice = UAHToUSD * USDToMatic
-					break
-				case 'USD': maticPrice = USDToMatic
-					break
-				case 'MATIC': maticPrice = 1
-					break
-			}
-			let challengerStakeAtRisk = Math.trunc((e.target.challengerStakeAtRisk.value / maticPrice) * 1000) / 1000
-			if (challengerStakeAtRisk >= user.balance) {
-				setError('Not enough money')
-				return
-			}
-			let inspectorReward = Math.trunc(((e.target.inspectorReward.value || 0) / maticPrice) * 1000) / 1000
-			if (challengerStakeAtRisk < inspectorReward) {
-				setError('Inspector reward should be less or equal than whole stake')
-				return
-			}
-			console.log(inspectorReward);
-			let inspectorAddress = e.target.inspectorAddress.value
-			let description = e.target.description.value
-			const newChallenge = {
-				timeoutAfterMilliseconds,
-				challengerStakeAtRisk,
-				inspectorAddress,
-				description,
-				inspectorReward
-			}
-			console.log(newChallenge);
-			await createChallenge(newChallenge)
-		}} className='create-challenge-form'>
-			<p>Your balance is {user[`balance${currencyIndex !== 0 ? currencies[currencyIndex] : ''}`]} {currencies[currencyIndex]}</p>
+		<form onSubmit={onSubmit} className='create-challenge-form'>
+			<p>Your balance is {user[`balance${displayedCurrency !== 'MATIC' ? displayedCurrency : ''}`]} {displayedCurrency}</p>
 			<span>Bet some money on your success</span>
 			<br />
-			<input type="text" name="challengerStakeAtRisk"/>
-			<button type="button" style={{width: '70px'}} onClick={changeCurrency}>{currencies[currencyIndex]}</button> choose currency
+			<input type="text" name="challengerStakeAtRisk" />
+			<button type="button" style={{ width: '70px' }} onClick={switchDisplayedCurrency}>{displayedCurrency}</button> choose currency
 			<br />
 			<span>Reward to inspector for their attention (optional)</span>
 			<br />
@@ -71,17 +78,17 @@ function CreateChallengeForm({ user, createChallenge }) {
 			<br />
 			<span>Who will inspect your challenge (address)</span>
 			<br />
-			<input type="text" name="inspectorAddress"/>
+			<input type="text" name="inspectorAddress" />
 			<br />
 			<span>Define your challenge. Description</span>
-			<textarea type="text" name="description" style={{height: '100px', width: '400px'}}/>
+			<textarea type="text" name="description" style={{ height: '100px', width: '400px' }} />
 			<br />
 			<span>What time do you need to succeed (optional)</span>
 			<br />
-			<input max="12" min="0" style={{width: '50px'}} type="number" name="timeoutMonths" defaultValue="0"/><span>months</span><br />
-			<input max="30" min="0" style={{width: '50px'}} type="number" name="timeoutDays" defaultValue="0"/><span>days</span><br />
-			<input max="24" min="0" style={{width: '50px'}} type="number" name="timeoutHours" defaultValue="0"/><span>hours</span><br />
-			<input max="60" min="0" style={{width: '50px'}} type="number" name="timeoutMinutes" defaultValue="0"/><span>minutes</span><br />
+			<input max="12" min="0" style={{ width: '50px' }} type="number" name="timeoutMonths" defaultValue="0" /><span>months</span><br />
+			<input max="30" min="0" style={{ width: '50px' }} type="number" name="timeoutDays" defaultValue="0" /><span>days</span><br />
+			<input max="24" min="0" style={{ width: '50px' }} type="number" name="timeoutHours" defaultValue="0" /><span>hours</span><br />
+			<input max="60" min="0" style={{ width: '50px' }} type="number" name="timeoutMinutes" defaultValue="0" /><span>minutes</span><br />
 			<br />
 			<input type="submit" title='Submit' />
 			<p>{error}</p>
@@ -89,4 +96,16 @@ function CreateChallengeForm({ user, createChallenge }) {
 	);
 }
 
-export default CreateChallengeForm
+const mapStateToProps = createStructuredSelector({
+	user: selectUser,
+
+	prices: selectPrices,
+	displayedCurrency: selectDisplayedCurrency
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	createChallenge: (payload) => dispatch(createChallenge(payload)),
+	switchDisplayedCurrency: () => dispatch(switchDisplayedCurrency())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateChallengeForm)

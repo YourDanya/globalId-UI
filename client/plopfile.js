@@ -88,5 +88,4 @@ const config = plop => {
 	  ]
 	})
 }
-
-export default config
+module.exports = config

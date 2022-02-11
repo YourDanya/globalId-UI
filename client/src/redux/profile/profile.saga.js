@@ -6,10 +6,12 @@ import {
   select,
   delay
 } from '@redux-saga/core/effects'
+import userApi from '../../api/user.api';
 import userProfileApi from '../../api/userProfile.api';
 import withLoading from '../../utils/redux-utils/withLoading.saga'
-import { getUserDataSaga } from '../user/user.saga';
-import { changeAvatar } from './profile.slice'
+import { setModifyProfileLoading } from '../loading.slice';
+import { fetchUserSaga, getUserDataSaga } from '../user/user.saga';
+import { changeAvatar, modifyProfile } from './profile.slice'
 
 
 
@@ -20,6 +22,13 @@ export function* changeAvatarSaga({payload}) {
     yield call(getUserDataSaga)
 }
 
+const modifyProfileSaga = withLoading(function*({ payload }) {
+  const message = yield userApi.postSingle('user-data/profile', payload)
+  yield call(fetchUserSaga)
+  return message
+}, setModifyProfileLoading)
+
 export default function* profileSaga() {
   yield takeLatest(changeAvatar, changeAvatarSaga)
+  yield takeLatest(modifyProfile, modifyProfileSaga)
 }

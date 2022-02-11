@@ -11,6 +11,8 @@ router.route('/user-data/')
     .get(jwtParser, getUserData)
     .post(jwtParser, setUserData)
 
+router.route('/user-data/profile/').post(jwtParser, setUserData)
+
 router.route('/user-data/all-users')
     .get(getAllUsers)
 

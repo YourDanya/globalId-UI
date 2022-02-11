@@ -9,12 +9,14 @@ const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    changeAvatar() {}
+    changeAvatar() {},
+    modifyProfile() {},
   }
 })
 
 export default profileSlice.reducer
 export const {
-  changeAvatar
+  changeAvatar,
+  modifyProfile
 } = profileSlice.actions
 

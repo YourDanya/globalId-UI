@@ -6,8 +6,10 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 
+
 import router from './routes/router.js'
 import connectDB from './configs/mongo.js';
+
 
 process.setMaxListeners(0)
 
@@ -43,4 +45,6 @@ app.get('/', (req, res) => res.send('123'))
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
+
+
 

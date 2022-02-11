@@ -6,6 +6,11 @@ import logger from "redux-logger";
 import userReducer from "./user/user.slice";
 import loadingReducer from './loading.slice'
 import profileReducer  from './profile/profile.slice';
+import walletReducer  from './wallet/wallet.slice';
+import usersReducer  from './users/users.slice';
+import currencyReducer  from './currency/currency.slice';
+import gameActionsReducer  from './gameActions/gameActions.slice';
+import fetchReducer  from './fetch/fetch.slice';
 //*** GENERATED IMPORTS GO HERE ***
 
 import rootSaga from "./rootSaga";
@@ -22,9 +27,16 @@ const store = configureStore({
 		user: userReducer,
 		loading: loadingReducer,
 		profile: profileReducer,
+wallet: walletReducer,
+users: usersReducer,
+currency: currencyReducer,
+gameActions: gameActionsReducer,
+fetch: fetchReducer,
 //*** GENERATED REDUCERS GO HERE ***
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(customMiddleware)
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+		serializableCheck: false
+	}).concat(customMiddleware)
 })
 
 sagaMiddleware.run(rootSaga)

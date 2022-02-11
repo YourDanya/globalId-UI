@@ -20,6 +20,11 @@ const initialState = {
             isLoading: false,
             message: ''
         }
+    },
+    modifyProfile: {
+      success: false,
+      isLoading: false,
+      message: ''
     }
 
 }
@@ -50,6 +55,9 @@ const loadingSlice = createSlice({
         setResetUserPasswordLoading(state, {payload}) {
             state.user.update=payload
         },
+        setModifyProfileLoading(state, {payload}) {
+            state.modifyProfile = payload
+        }
     }
 })
 
@@ -61,7 +69,8 @@ export const {
     setAuthLoadingSilently,
     setUpdateUserPasswordLoading,
     setForgetUserPasswordLoading,
-    setResetUserPasswordLoading
+    setResetUserPasswordLoading,
+    setModifyProfileLoading
 } = loadingSlice.actions
 
 export const selectLoading = state => state.loading
@@ -73,3 +82,5 @@ export const selectUpdateUserDataLoading = createSelector(selectUserLoading, (us
 export const selectUpdateUserPasswordLoading= createSelector(selectUserLoading, (userLoading) => userLoading.update)
 export const selectForgetUserPasswordLoading= createSelector(selectUserLoading, (userLoading) => userLoading.update)
 export const selectResetUserPasswordLoading= createSelector(selectUserLoading, (userLoading) => userLoading.update)
+export const selectModifyProfileLoading = createSelector([selectLoading], (loading) => loading.modifyProfile)
+
